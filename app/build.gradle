@@ -1,0 +1,70 @@
+plugins {
+    // Apply the scala Plugin to add support for Scala.
+    id 'scala'
+    // Apply the application plugin to add support for building a CLI application in Java.
+    id 'application'
+    id 'jacoco'
+}
+
+repositories {
+    // Use Maven Central for resolving dependencies.
+    mavenCentral()
+}
+
+dependencies {
+    // https://mvnrepository.com/artifact/org.scala-lang/scala-library
+    implementation 'org.scala-lang:scala-library:2.13.7'
+
+    // https://mvnrepository.com/artifact/io.reactivex.rxjava3/rxjava
+    implementation 'io.reactivex.rxjava3:rxjava:3.1.2'
+
+    // This dependency is used by the application.
+    implementation 'com.google.guava:guava:30.1.1-jre'
+    implementation 'org.junit.jupiter:junit-jupiter:5.7.1'
+
+    // https://mvnrepository.com/artifact/com.tngtech.archunit/archunit
+    implementation 'com.tngtech.archunit:archunit:0.22.0'
+
+    // Use Scalatest for testing our library
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.scalatest:scalatest_2.13:3.2.10'
+    testImplementation 'org.scalatestplus:junit-4-13_2.13:3.2.2.0'
+    // https://mvnrepository.com/artifact/org.scalacheck/scalacheck
+    testImplementation 'org.scalacheck:scalacheck_2.13:1.15.4'
+    // https://mvnrepository.com/artifact/org.scalatestplus/scalacheck-1-15
+    testImplementation 'org.scalatestplus:scalacheck-1-15_2.13:3.3.0.0-SNAP3'
+
+    // Need scala-xml at test runtime
+    testRuntimeOnly 'org.scala-lang.modules:scala-xml_2.13:1.2.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.1'
+    testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.7.1'
+}
+
+test {
+    useJUnitPlatform{
+        includeEngines("junit-jupiter", "junit-vintage")
+    }
+    finalizedBy jacocoTestReport // report is always generated after tests run
+}
+
+jacocoTestReport {
+    reports {
+        xml.required = true
+    }
+    dependsOn test // tests are required to run before generating the report
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'it.unibo.pps.App'
+        )
+    }
+    duplicatesStrategy(DuplicatesStrategy.WARN)
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+}
+
+application {
+    // Define the main class for the application.
+    mainClass = 'it.unibo.pps.App'
+}
