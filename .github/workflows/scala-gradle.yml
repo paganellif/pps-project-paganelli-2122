@@ -1,0 +1,65 @@
+name: Scala CI with Gradle
+
+on:
+  push:
+    branches: [ main, dev ]
+  pull_request:
+    branches: [ main, dev ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Set up JDK 16
+        uses: actions/setup-java@v2
+        with:
+          java-version: '16'
+          distribution: 'adopt'
+          #cache: gradle
+          
+      - name: Build
+        run: gradle assemble
+        
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Set up JDK 16
+        uses: actions/setup-java@v2
+        with:
+          java-version: '16'
+          distribution: 'adopt'
+          #cache: gradle
+          
+      - name: Test
+        run: gradle check
+        
+      - name: Upload Test Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-reports-artifacts
+          path: app/build/reports/jacoco/test/jacocoTestReport.xml
+          
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Set up JDK 16
+        uses: actions/setup-java@v2
+        with:
+          java-version: '16'
+          distribution: 'adopt'
+          #cache: gradle
+          
+      - name: Package
+        run: gradle jar
+        
+      - name: Upload Package Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: package-artifacts
+          path: app/build/libs/app.jar
