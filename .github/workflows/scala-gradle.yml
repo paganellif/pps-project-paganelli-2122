@@ -7,7 +7,7 @@ on:
   pull_request:
     branches: [ main, dev ]
     paths-ignore: [ 'doc/**/*' ]
-  
+
 jobs:
   build:
     runs-on: ubuntu-latest
