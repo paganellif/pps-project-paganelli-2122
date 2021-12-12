@@ -2,7 +2,7 @@ package it.unibo.pps.rxscala
 
 import rx.lang.scala.{Observable, Observer}
 
-object RxScalaExample extends App {
+object RxScalaBaseExample extends App {
   val helloWorld: String = "Hello RxScala World!"
   val observable = Observable.from(helloWorld)
 
