@@ -3,9 +3,11 @@ name: Scala CI with Gradle
 on:
   push:
     branches: [ main, dev ]
+    paths-ignore: [ 'doc/**/*' ]
   pull_request:
     branches: [ main, dev ]
-
+    paths-ignore: [ 'doc/**/*' ]
+  
 jobs:
   build:
     runs-on: ubuntu-latest
