@@ -16,8 +16,8 @@ object AkkaStreamTimeFlowExample extends App {
           .map(ts => System.currentTimeMillis() - ts)
           .take(20)
 
-  val done1: Future[Done] = source.runForeach(ms => println(s"[1] ms: $ms"))
-  val done2: Future[Done] = source.runForeach(ms => println(s"[2] ms: $ms"))
+  val done1: Future[Done] = source.filter(ts => (ts % 2 ) == 0).runForeach(ts => println(s"[1] ms: $ts"))
+  val done2: Future[Done] = source.filter(ts => (ts % 2 ) != 0).runForeach(ts => println(s"[2] ms: $ts"))
 
   done1.onComplete(_ => actorSystem.terminate())
 }
