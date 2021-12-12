@@ -17,7 +17,7 @@ jobs:
         with:
           java-version: '16'
           distribution: 'adopt'
-          cache: gradle
+          #cache: gradle
           
       - name: Build
         run: gradle assemble
@@ -32,7 +32,7 @@ jobs:
         with:
           java-version: '16'
           distribution: 'adopt'
-          cache: gradle
+          #cache: gradle
           
       - name: Test
         run: gradle check
@@ -53,7 +53,7 @@ jobs:
         with:
           java-version: '16'
           distribution: 'adopt'
-          cache: gradle
+          #cache: gradle
           
       - name: Package
         run: gradle jar
