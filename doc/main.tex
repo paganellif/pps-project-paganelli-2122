@@ -3,12 +3,16 @@
 \usepackage[dvipsnames]{xcolor}
 \usepackage[utf8]{inputenc}
 \usepackage{hyperref}
+\usepackage{multicol}
+\usepackage{setspace}
+\usepackage{fancyhdr}
 \usepackage{mathtools}
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 \usepackage{url}
 \usepackage{natbib}
 \usepackage{graphicx}
+\linespread{1.2}
 \usepackage{float}
 \usepackage{pgfplots}
 \usepackage{listings}
@@ -77,6 +81,30 @@
 }
 
 \date{Dicembre 2021}
+
+\usepackage{ifxetex,ifluatex}
+
+\ifxetex
+  \usepackage{catchfile}
+  \newcommand\getenv[2][]{%
+    \immediate\write18{kpsewhich --var-value #2 > \jobname.tmp}%
+    \CatchFileDef{\temp}{\jobname.tmp}{\endlinechar=-1}%
+    \if\relax\detokenize{#1}\relax\temp\else\let#1\temp\fi}
+\else
+  \ifluatex
+    \newcommand\getenv[2][]{%
+      \edef\temp{\directlua{tex.sprint(
+        kpse.var_value("\luatexluaescapestring{#2}") or "" ) }}%
+      \if\relax\detokenize{#1}\relax\temp\else\let#1\temp\fi}
+  \else
+    \usepackage{catchfile}
+    \newcommand{\getenv}[2][]{%
+      \CatchFileEdef{\temp}{"|kpsewhich --var-value #2"}{\endlinechar=-1}%
+      \if\relax\detokenize{#1}\relax\temp\else\let#1\temp\fi}
+  \fi
+\fi
+
+
 
 \begin{document}
 
