@@ -1,0 +1,136 @@
+\documentclass{report}
+\usepackage[italian]{babel}
+\usepackage[dvipsnames]{xcolor}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{multicol}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\usepackage{mathtools}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\usepackage{url}
+\usepackage{natbib}
+\usepackage{graphicx}
+\linespread{1.2}
+\usepackage{float}
+\usepackage{pgfplots}
+\usepackage{listings}
+
+\pgfplotsset{width=10cm,compat=1.9}
+\usepgfplotslibrary{external}
+\tikzexternalize
+\setlength{\parindent}{0pt}
+
+\newcommand{\emailaddr}[1]{\href{mailto:#1}{\texttt{#1}}}
+\usepackage{subfiles} % Best loaded last in the preamble
+\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage{float}
+
+\lstset{basicstyle=\ttfamily,
+  showstringspaces=false,
+  commentstyle=\color{red},
+  keywordstyle=\color{blue},
+  inputencoding=utf8,
+  extendedchars=true
+}
+
+\usepackage{color}
+\definecolor{lightgray}{rgb}{.9,.9,.9}
+\definecolor{darkgray}{rgb}{.4,.4,.4}
+\definecolor{purple}{rgb}{0.65, 0.12, 0.82}
+
+\lstdefinelanguage{JavaScript}{
+  keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywords={class, export, boolean, throw, implements, import, this},
+  ndkeywordstyle=\color{darkgray}\bfseries,
+  identifierstyle=\color{black},
+  sensitive=false,
+  comment=[l]{//},
+  morecomment=[s]{/*}{*/},
+  commentstyle=\color{purple}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  morestring=[b]',
+  morestring=[b]"
+}
+
+\lstset{
+   language=JavaScript,
+   backgroundcolor=\color{lightgray},
+   extendedchars=true,
+   basicstyle=\footnotesize\ttfamily,
+   showstringspaces=false,
+   showspaces=false,
+   numbers=left,
+   numberstyle=\footnotesize,
+   numbersep=9pt,
+   tabsize=2,
+   breaklines=true,
+   showtabs=false,
+   captionpos=b
+}
+
+\title{\LARGE \textbf{Paradigmi di Programmazione e Sviluppo} \\ FRP-Scala: Studio e sperimentazione del paradigma Functional Reactive Programming in Scala
+}
+
+\author{
+    Filippo Paganelli \\ \emailaddr{filippo.paganelli3@studio.unibo.it}
+    \\ matricola 0000926989 \\ A.A 21/22
+}
+
+\date{Dicembre 2021}
+
+\usepackage{ifxetex,ifluatex}
+
+\ifxetex
+  \usepackage{catchfile}
+  \newcommand\getenv[2][]{%
+    \immediate\write18{kpsewhich --var-value #2 > \jobname.tmp}%
+    \CatchFileDef{\temp}{\jobname.tmp}{\endlinechar=-1}%
+    \if\relax\detokenize{#1}\relax\temp\else\let#1\temp\fi}
+\else
+  \ifluatex
+    \newcommand\getenv[2][]{%
+      \edef\temp{\directlua{tex.sprint(
+        kpse.var_value("\luatexluaescapestring{#2}") or "" ) }}%
+      \if\relax\detokenize{#1}\relax\temp\else\let#1\temp\fi}
+  \else
+    \usepackage{catchfile}
+    \newcommand{\getenv}[2][]{%
+      \CatchFileEdef{\temp}{"|kpsewhich --var-value #2"}{\endlinechar=-1}%
+      \if\relax\detokenize{#1}\relax\temp\else\let#1\temp\fi}
+  \fi
+\fi
+
+
+
+\begin{document}
+
+\maketitle
+\newpage
+\tableofcontents
+
+\newpage
+\chapter{Introduzione}\label{analisi}
+\subfile{chapters/introduzione-1}
+
+\newpage
+\chapter{Functional Reactive Programming}\label{analisi}
+\subfile{chapters/frp-2}
+
+\newpage
+\chapter{Analisi Librerie Scala}\label{analisi}
+\subfile{chapters/analisi-3}
+
+\newpage
+\chapter{Mini-Applicazione FRP}\label{analisi}
+\subfile{chapters/mini-app-4}
+
+\newpage
+\nocite{*} % Includes all references from the `references.bib` file
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}
