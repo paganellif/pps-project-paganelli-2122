@@ -31,7 +31,15 @@ Le tipologie di stream sono classificate in base a quando l'observable inizia ad
 \end{description}
 
 \section{FP + RP}
-Il multiparadigma chiamato Functional Reactive Programming (FRP) consiste nella combinazione dei paradigmi funzionale (FP) e reattivo (RP): permette infatti di manipolare stream di dati in modo asincrono con backpressure non-bloccante utilizzando le feature del paradigma funzionale come immutabilità, assenza di side-effects, referential transparency, ...). In RP "\textit{everything is a stream}" mentre in FP "\textit{everything is a function}".
+Il multiparadigma chiamato Functional Reactive Programming (FRP) consiste nella combinazione dei paradigmi funzionale (FP) e reattivo (RP): permette infatti di manipolare stream di dati in modo asincrono con backpressure non-bloccante utilizzando le feature del paradigma funzionale come immutabilità, assenza di side-effects, referential transparency, ...). In RP "\textit{everything is a stream}" mentre in FP "\textit{everything is a function}". \\
+
+I concetti chiave alla base del paradigma FRP sono i due tipi di dato \textit{Behavior} e \textit{Event}, ognuno dei quali con i propri combinatori:
+\begin{description}
+    \item[Behavior] - Modella valori che variano nel tempo.
+    \item[Event] - Modella un sequenza di eventi in ordine cronologico.
+\end{description}
+
+Un programma FRP è quindi un insieme di behavior e event, costruito partendo da valori statici (che non variano nel tempo) e/o altri behavior/event.
 
 \section{ReactiveStreams}
 
