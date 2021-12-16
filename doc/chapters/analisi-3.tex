@@ -1,10 +1,18 @@
 \documentclass[../main.tex]{subfiles}
 
 \begin{document}
-In questa sezione si analizzano alcune delle librerie utilizzabili per il paradigma FRP in Scala. L'implementazione RxScala della libreria ReactiveX non è stata considerata nello studio perchè come indicato nella documentazione \cite{frp8} "\textit{It is sometimes called functional reactive programming but this is a misnomer. ReactiveX may be functional, and it may be reactive, but “functional reactive programming” is a different animal. One main point of difference is that functional reactive programming operates on values that change continuously over time, while ReactiveX operates on discrete values that are emitted over time.}".
-
+In questa sezione si analizzano alcune delle librerie scelte per la sperimentazione del paradigma FRP in Scala.
 \section{Confronto Librerie}
 \subsection{Akka Stream}
+Akka Stream è un modulo del Toolkit Akka Lightbend che permette la manipolazione di stream di dati asincroni e con backpressure non-bloccante. Implementa le specifiche Reactive Stream \cite{frp4} seguendo lo standard del Reactive Manifesto \cite{frp3}. I principali componenti della libreria sono:
+\begin{description}
+  \item[Source] -
+  \item[Sink] - 
+  \item[Flow] - 
+  \item[RunnableGraph] - 
+  \item[Fan-in Function] -
+  \item[Fan-out Function] -
+\end{description}
 \subsection{Sodium}
 \section{Casi d'uso}
 \end{document}
