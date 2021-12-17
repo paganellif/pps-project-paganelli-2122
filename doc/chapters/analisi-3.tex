@@ -2,14 +2,30 @@
 
 \begin{document}
 In questa sezione si analizzano alcune delle librerie scelte per la sperimentazione del paradigma FRP in Scala.
+
 \section{Confronto Librerie}
+
 \subsection{Akka Stream}
-Akka Stream è un modulo del Toolkit Akka Lightbend che permette la manipolazione di stream di dati asincroni e con backpressure non-bloccante seguendo le specifiche Reactive Stream \cite{frp4} e Reactive Manifesto \cite{frp3}.\\
-La libreria è stata aggiunta al progetto come dipendenza Gradle:
-\begin{lstlisting}[basicstyle=\small,caption={Dipendenze Akka Stream Gradle},captionpos=b,frame=single]
-implementation platform("com.typesafe.akka:akka-bom_2.13:2.6.17")
-implementation "com.typesafe.akka:akka-stream_2.13"
-\end{lstlisting}
+Akka Stream è un modulo del Toolkit Akka Lightbend che permette la manipolazione di stream di dati asincroni e con backpressure non-bloccante seguendo le specifiche Reactive Stream \cite{frp4} e Reactive Manifesto \cite{frp3}.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|}
+     \hline
+     Repository & https://github.com/akka/akka \\
+     \hline
+     Versione Latest Release & 2.16.17 \\
+     \hline
+     Data Latest Release & Ottobre 2021 \\
+     \hline
+     Supporto Scala & 2.21, 2.13, 3 \\
+     \hline
+     Dipendenza Gradle & com.typesafe.akka:akka-stream\_2.13 \\
+     \hline
+\end{tabular}
+\caption{Main Info Libreria Akka Stream}
+\end{table}
+
 
 I principali componenti della libreria sono:
 \begin{description}
@@ -20,11 +36,28 @@ I principali componenti della libreria sono:
   \item[Fan-in Function] -
   \item[Fan-out Function] -
 \end{description}
+
+
 \subsection{Sodium}
-La libreria è stata aggiunta al progetto come dipendenza Gradle:
-\begin{lstlisting}[basicstyle=\small,caption={Dipendenza Sodium Gradle},captionpos=b,frame=single]
-implementation "nz.sodium:sodium:1.2.0"
-\end{lstlisting}
+La libreria open-source Sodium è stata progettata e sviluppata da Stephen Blackheath e Anthony Jones (più altri collaboratori) per fornire una libreria production-ready in diversi linguaggi, tra cui Scala, per promuovere la vera definizione del paradigma FRP e per realizzare un riferimento/benchmark per future librerie.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|}
+     \hline
+     Repository & https://github.com/SodiumFRP/sodium \\
+     \hline
+     Versione Latest Release & 1.2.0 \\
+     \hline
+     Data Latest Release & Ottobre 2019 \\
+     \hline
+     Supporto Scala & 2.12 \\
+     \hline
+     Dipendenza Gradle & nz.sodium:sodium:1.2.0 \\
+     \hline
+\end{tabular}
+\caption{Main Info Libreria Sodium}
+\end{table}
 \section{Casi d'uso}
 \end{document}
 
