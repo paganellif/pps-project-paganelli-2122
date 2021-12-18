@@ -16,11 +16,10 @@
 \usepackage{float}
 \usepackage{pgfplots}
 \usepackage{listings}
-
+\usepackage{indentfirst}
 \pgfplotsset{width=10cm,compat=1.9}
 \usepgfplotslibrary{external}
 \tikzexternalize
-\setlength{\parindent}{0pt}
 
 \newcommand{\emailaddr}[1]{\href{mailto:#1}{\texttt{#1}}}
 \usepackage{subfiles} % Best loaded last in the preamble
@@ -69,7 +68,9 @@
    tabsize=2,
    breaklines=true,
    showtabs=false,
-   captionpos=b
+   captionpos=b,
+   columns=fullflexible,
+   postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
 }
 
 \title{\LARGE \textbf{Paradigmi di Programmazione e Sviluppo} \\ FRP-Scala: Studio e sperimentazione del paradigma Functional Reactive Programming in Scala
