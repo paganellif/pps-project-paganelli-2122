@@ -62,7 +62,7 @@ dependencies {
     // Need scala-xml at test runtime
     testRuntimeOnly 'org.scala-lang.modules:scala-xml_2.13:1.2.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.1'
-    testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.7.1'
+    testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.8.2'
 }
 
 test {
