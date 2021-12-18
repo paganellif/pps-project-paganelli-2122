@@ -1,4 +1,4 @@
-name: Scala CI with Gradle
+name: Latex Report CI
 
 on:
   push:
