@@ -1,6 +1,6 @@
 package it.unibo.pps.sodium
 
-import nz.sodium.Cell
+import io.github.sodium.Cell
 
 object SodiumExample extends App {
 
