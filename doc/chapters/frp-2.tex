@@ -41,7 +41,18 @@ I concetti chiave alla base del paradigma FRP sono i due tipi di dato \textit{Be
     \item[Event] - Modella un sequenza di eventi in ordine cronologico. Altri sinonimi di event sono \textit{Stream} o \textit{Observable}. Un evento viene propagato attraverso uno stream in un preciso momento, in questo caso si dice che lo stream è attivo (\textit{fired}). Gli stream a differenza dei behavior modellano i cambiamenti dello stato, valori che possono essere ottenuti solamente nell'istante in cui uno stream è attivo.
 \end{description}
 
-Un programma FRP è quindi un insieme di behavior e event, costruito partendo da valori statici (che non variano nel tempo) e/o altri behavior/event. Questi sostituiscono il \textit{pattern Observer} fornendo un sistema per programmare logica event-driven in modo componibile/modulare, ovvero reazione ad un input o stream di dati.
+Un programma FRP è quindi un insieme di behavior e event, costruito partendo da valori statici (che non variano nel tempo) e/o altri behavior/event. Questi sostituiscono il \textit{pattern Observer} fornendo un sistema per programmare logica event-driven in modo componibile/modulare, ovvero definire reazioni al verificarsi di un evento (un input o stream di dati). L' esecuzione di un programma FRP può essere suddivisa in 3 step:
+\begin{description}
+    \item[Inizializzazione] - Allo startup del programma gli statement vengono convertiti in un grafo orientato in-memory in modo da rappresentare le dipendenze tra gli stream di dati.
+    \item[Esecuzione] - Per il resto del tempo d'esecuzione il programma attende un input/cambiamento e produce un output valutando le dipendenze del grafo.
+    \item[Modifica Grafo] - Nulla vieta di modificare dinamicamente le dipendenze tra gli stream di dati e quindi il grafo orientato che le rappresenta.
+\end{description}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{img/frp-scala1.png}
+\caption{Lifecycle Programma FRP}
+\end{figure}
 
 \section{ReactiveStreams}
 
