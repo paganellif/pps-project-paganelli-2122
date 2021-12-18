@@ -30,7 +30,7 @@ dependencies {
     implementation 'com.outr:reactify_2.13:4.0.6'
 
     // https://mvnrepository.com/artifact/co.fs2/fs2-core
-    implementation 'co.fs2:fs2-core_2.13:3.2.3'
+    implementation 'co.fs2:fs2-core_2.13:3.2-148-d9af944'
     // https://mvnrepository.com/artifact/co.fs2/fs2-io
     implementation 'co.fs2:fs2-io_2.13:3.2-148-d9af944'
     // https://mvnrepository.com/artifact/co.fs2/fs2-reactive-streams
