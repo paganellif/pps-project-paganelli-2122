@@ -2,7 +2,7 @@ name: Scala CI with Gradle
 
 on:
   push:
-    branches: [ main, dev ]
+    branches: [ main, dev, 'renovate/*' ]
     paths-ignore: [ 'doc/**/*' ]
   pull_request:
     paths-ignore: [ 'doc/**/*' ]
