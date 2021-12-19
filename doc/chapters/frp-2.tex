@@ -35,10 +35,24 @@ Il multiparadigma chiamato Functional Reactive Programming (FRP) consiste nella 
 
 In RP "\textit{everything is a stream}" mentre in FP "\textit{everything is a function}". Come indicato nella documentazione \cite{frp8} della libreria ReactiveX riferendosi al paradigma reattivo: "\textit{It is sometimes called functional reactive programming but this is a misnomer. ReactiveX may be functional, and it may be reactive, but “functional reactive programming” is a different animal. One main point of difference is that functional reactive programming operates on values that change continuously over time, while ReactiveX operates on discrete values that are emitted over time.}".
 
-I concetti chiave alla base del paradigma FRP sono i due tipi di dato \textit{Behavior} e \textit{Event}, ognuno dei quali con i propri combinatori. Alcuni sistemi FRP non fanno distinzione, modellando entrambi i due tipi di dato con il concetto \textit{Signal}:
+I concetti chiave alla base del paradigma FRP sono i due tipi di dato \textit{Behavior} e \textit{Event}, e tipicamente dieci operazioni basiche chiamate \textit{primitive}. Alcuni sistemi FRP non fanno distinzione, modellando entrambi i due tipi di dato con il concetto \textit{Signal}:
 \begin{description}
     \item[Behavior] - Modella valori che variano nel tempo. Altri sinonimi di behavior sono \textit{Property} o \textit{Cell}. I behavior modellano lo stato, valori che possono essere ottenuti in qualsiasi momento.
     \item[Event] - Modella un sequenza di eventi in ordine cronologico. Altri sinonimi di event sono \textit{Stream} o \textit{Observable}. Un evento viene propagato attraverso uno stream in un preciso momento, in questo caso si dice che lo stream è attivo (\textit{fired}). Gli stream a differenza dei behavior modellano i cambiamenti dello stato, valori che possono essere ottenuti solamente nell'istante in cui uno stream è attivo.
+\end{description}
+
+Le seguenti dieci primitive sono le operazioni basiche che tipicamente sono presenti in un sistema FRP:
+\begin{description}
+    \item[Map] - Primitiva che genera un nuovo stream applicando una certa funzione ad ogni evento emesso all'attivazione di uno specifico stream.
+    \item[Merge] - Definisce uno stream unendo gli eventi di due stream. Questa primitiva è chiamata anche \textit{union} o \textit{append}.
+    \item[Hold] - Converte uno stream in un behavior inserendo nel behavior l'ultimo evento ricevuto dallo stream. Questa primitiva è chiamata anche \textit{toProperty}.
+    \item[Snapshot] - Cattura/Combina il valore di un behavior nell'istante in cui si attiva uno specifico stream. Questa primitiva è chiamata anche \textit{withLatest} o \textit{attach}.
+    \item[Filter] - Definisce uno stream con una certa logica di attivazione tramite la definizione di un predicato. L'evento viene propagato solamente se è soddisfatto il predicato.
+    \item[Lift] - Primitiva simile alla primitiva \textit{map} ma che opera sul singolo behavior. Definisce un operazione da un valore contenuto in un behavior verso un altro tipo di "container" come ad esempio \textit{List} o \textit{Optional}.
+    \item[Never] - Definisce uno stream che non si attiva mai.
+    \item[Constant] - Un behavior definito tramite questa primitiva assume un valore costante che non può essere cambiato.
+    \item[Sample] - 
+    \item[Switch] -
 \end{description}
 
 Un programma FRP è quindi un insieme di behavior e event, costruito partendo da valori statici (che non variano nel tempo) e/o altri behavior/event. Questi sostituiscono il \textit{pattern Observer} fornendo un sistema per programmare logica event-driven in modo componibile/modulare, ovvero definire reazioni al verificarsi di un evento (un input o stream di dati). L' esecuzione di un programma FRP può essere suddivisa in 3 step:
