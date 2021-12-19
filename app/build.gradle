@@ -60,7 +60,7 @@ dependencies {
     testImplementation 'org.scalatestplus:scalacheck-1-15_2.13:3.3.0.0-SNAP3'
 
     // Need scala-xml at test runtime
-    testRuntimeOnly 'org.scala-lang.modules:scala-xml_2.13:1.2.0'
+    testRuntimeOnly 'org.scala-lang.modules:scala-xml_2.13:2.0.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.1'
     testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.7.1'
 }
