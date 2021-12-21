@@ -39,7 +39,7 @@ dependencies {
     // https://mvnrepository.com/artifact/com.typesafe.akka/akka-stream
     implementation 'com.typesafe.akka:akka-stream_2.13:2.6.18'
     implementation platform('com.typesafe.akka:akka-bom_2.13:2.6.17')
-    testImplementation 'com.typesafe.akka:akka-stream-testkit_2.13:2.6.17'
+    testImplementation 'com.typesafe.akka:akka-stream-testkit_2.13:2.6.18'
 
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:30.1.1-jre'
