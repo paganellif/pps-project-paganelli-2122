@@ -5,39 +5,6 @@ In questa sezione si analizzano alcune delle librerie scelte per la sperimentazi
 
 \section{Confronto Librerie}
 
-\subsection{Akka Stream}
-Akka Stream è un modulo del Toolkit Akka Lightbend che permette la manipolazione di stream di dati asincroni e con backpressure non-bloccante seguendo le specifiche Reactive Stream \cite{frp4} e Reactive Manifesto \cite{frp3}.
-
-\begin{table}[H]
-\centering
-\begin{tabular}{|c|c|}
-     \hline
-     Repository & https://github.com/akka/akka \\
-     \hline
-     Versione Latest Release & 2.16.17 \\
-     \hline
-     Data Latest Release & Ottobre 2021 \\
-     \hline
-     Supporto Scala & 2.21, 2.13, 3 \\
-     \hline
-     Dipendenza Gradle & com.typesafe.akka:akka-stream\_2.13 \\
-     \hline
-\end{tabular}
-\caption{Main Info Libreria Akka Stream}
-\end{table}
-
-
-I principali componenti della libreria sono:
-\begin{description}
-  \item[Source] -
-  \item[Sink] - 
-  \item[Flow] - 
-  \item[RunnableGraph] - 
-  \item[Fan-in Function] -
-  \item[Fan-out Function] -
-\end{description}
-
-
 \subsection{Sodium}
 La libreria open-source Sodium è stata progettata e sviluppata da Stephen Blackheath e Anthony Jones (più altri collaboratori) per fornire una libreria production-ready in diversi linguaggi, tra cui Scala, per promuovere la vera definizione del paradigma FRP e per realizzare un riferimento/benchmark per future librerie.
 
@@ -51,6 +18,8 @@ La libreria open-source Sodium è stata progettata e sviluppata da Stephen Black
      \hline
      Data Latest Release & Ottobre 2019 \\
      \hline
+     Data Latest Commit & 3 Febbraio 2020 \\
+     \hline
      Supporto Scala & 2.12 \\
      \hline
      Dipendenza Gradle & nz.sodium:sodium:1.2.0 \\
@@ -59,7 +28,28 @@ La libreria open-source Sodium è stata progettata e sviluppata da Stephen Black
 \caption{Main Info Libreria Sodium}
 \end{table}
 
+\subsection{Reactify}
+Reactify è una libreria open-source che permette di sviluppare sistemi col paradigma FRP fornendo un insieme limitato di concetti rispetto ad altre librerie come Sodium. Il programma viene espresso in termini di variabili che cambiano (\textit{Var}) o non cambiano (\textit{Val}) valore nel tempo e nel definire una reazione al cambiamento: tutte le primitive tipiche del paradigma FRP non sono modellate la libreria, la quale permette di usare qualsiasi funzionalità di Scala direttamente.
 
-\section{Casi d'uso}
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|}
+     \hline
+     Repository & https://github.com/outr/reactify \\
+     \hline
+     Versione Latest Release & 4.0.6 \\
+     \hline
+     Data Latest Release & Maggio 2021 \\
+     \hline
+     Data Latest Commit & 17 Maggio 2021 \\
+     \hline
+     Supporto Scala & 2.11, 2.12, 2.13, 3 \\
+     \hline
+     Dipendenza Gradle & com.outr:reactify_2.13:4.0.6 \\
+     \hline
+\end{tabular}
+\caption{Main Info Libreria Reactify}
+\end{table}
+
 \end{document}
 
