@@ -2,8 +2,8 @@
 
 \begin{document}
 \section{Programmazione Reattiva}
-Con programmazione reattiva si intende un paradigma di programmazione dichiarativo basato sullo stream dei dati e sulla propagazione dei cambiamenti, fortemente correlato con i pattern Observer, Reactor ed il paradigma Event-Driven.\\
-Un programma reattivo è costruito definendo la logica della computazione ma non il flusso di controllo, il quale è definito dal verificarsi degli eventi.\\
+Con programmazione reattiva si intende un paradigma di programmazione dichiarativo basato sullo stream dei dati e sulla propagazione dei cambiamenti, fortemente correlato con i pattern Observer, Reactor ed il paradigma Event-Driven.
+Un programma reattivo è costruito definendo la logica della computazione ma non il flusso di controllo, il quale è definito dal verificarsi degli eventi.
 
 \subsection{Modelli di valutazione}
 Il cambiamento di un valore deve essere propagato automaticamente a tutte le sue dipendenze, azionando la ricomputazione attraverso la notifica. I modi possibili per la propagazione dei cambiamenti e quindi la loro valutazione sono:
@@ -12,10 +12,10 @@ Il cambiamento di un valore deve essere propagato automaticamente a tutte le sue
     \item[Pull:] (paradigma producer) I consumatori richiedono regolarmente i dati ai produttori.
     \item[Push-Pull:] I consumatori ricevono una notifica che descrive il cambiamento e per ottenere le informazioni necessarie devono richiederli ai produttori.
 \end{description}
-Il modello Push-Pull, chiamato anche backpressure, consiste in una modifica del modello Push che permette ai consumatori di inviare segnali di feedback ai produttori riguardanti l'andamento della propagazione del cambiamento. Il produttore può richiedere (Pull) quanti elementi desidera se questi sono disponibili, ma se questi non sono disponibili vengono ricevuti (Push) non appena lo diventano.\\
+Il modello Push-Pull, chiamato anche backpressure, consiste in una modifica del modello Push che permette ai consumatori di inviare segnali di feedback ai produttori riguardanti l'andamento della propagazione del cambiamento. Il produttore può richiedere (Pull) quanti elementi desidera se questi sono disponibili, ma se questi non sono disponibili vengono ricevuti (Push) non appena lo diventano.
 
 \subsection{Observable e Stream}
-Con observer si intende l'entità che si sottoscrive ad un observable in modo da essere notificato e reagire ad ogni elemento che esso emette. Mentre gli observable rappresentano quindi degli stream di dati asincroni che possono essere concatenati insieme (dipendenze) per definire in modo dichiarativo nuovi stream più complessi.\\
+Con observer si intende l'entità che si sottoscrive ad un observable in modo da essere notificato e reagire ad ogni elemento che esso emette. Mentre gli observable rappresentano quindi degli stream di dati asincroni che possono essere concatenati insieme (dipendenze) per definire in modo dichiarativo nuovi stream più complessi.
 
 \begin{figure}[H]
 \centering
@@ -33,7 +33,7 @@ Le tipologie di stream sono classificate in base a quando l'observable inizia ad
 \section{FP + RP}
 Il multiparadigma chiamato Functional Reactive Programming (FRP) consiste nella combinazione dei paradigmi funzionale (FP) e reattivo (RP): permette infatti di manipolare stream di dati in modo asincrono con backpressure non-bloccante utilizzando le feature del paradigma funzionale come immutabilità, assenza di side-effects, referential transparency, ...).
 
-In RP "\textit{everything is a stream}" mentre in FP "\textit{everything is a function}". Come indicato nella documentazione \cite{frp8} della libreria ReactiveX riferendosi al paradigma reattivo: "\textit{It is sometimes called functional reactive programming but this is a misnomer. ReactiveX may be functional, and it may be reactive, but “functional reactive programming” is a different animal. One main point of difference is that functional reactive programming operates on values that change continuously over time, while ReactiveX operates on discrete values that are emitted over time.}".
+In RP "\textit{everything is a stream}" mentre in FP "\textit{everything is a function}". Come indicato nella documentazione della libreria ReactiveX riferendosi al paradigma reattivo: "\textit{It is sometimes called functional reactive programming but this is a misnomer. ReactiveX may be functional, and it may be reactive, but “functional reactive programming” is a different animal. One main point of difference is that functional reactive programming operates on values that change continuously over time, while ReactiveX operates on discrete values that are emitted over time.}".
 
 I concetti chiave alla base del paradigma FRP sono i due tipi di dato \textit{Behavior} e \textit{Event}, e tipicamente dieci operazioni basiche chiamate \textit{primitive}. Alcuni sistemi FRP non fanno distinzione, modellando entrambi i due tipi di dato con il concetto \textit{Signal}:
 \begin{description}
