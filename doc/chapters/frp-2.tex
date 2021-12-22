@@ -30,11 +30,15 @@ Le tipologie di stream sono classificate in base a quando l'observable inizia ad
     \item[Connectable:] L'observable accetta sottoscrizioni dagli observer ma inizia ad emettere dati solamente quando viene invocato l'apposito metodo.
 \end{description}
 
-\section{FP + RP}
+\section{FP + RP = FRP}
 Il multiparadigma chiamato Functional Reactive Programming (FRP) consiste nella combinazione dei paradigmi funzionale (FP) e reattivo (RP): permette infatti di manipolare stream di dati in modo asincrono con backpressure non-bloccante utilizzando le feature del paradigma funzionale come immutabilità, assenza di side-effects, referential transparency, ...).
 
+\subsection{FRP vs RP}
 In RP "\textit{everything is a stream}" mentre in FP "\textit{everything is a function}". Come indicato nella documentazione della libreria ReactiveX riferendosi al paradigma reattivo: "\textit{It is sometimes called functional reactive programming but this is a misnomer. ReactiveX may be functional, and it may be reactive, but “functional reactive programming” is a different animal. One main point of difference is that functional reactive programming operates on values that change continuously over time, while ReactiveX operates on discrete values that are emitted over time.}".
 
+% fare esempio mouse: in rp il mouse è un observable che emette eventi al cambio della posizione e al quale è possibile sottoscrivere una azione, in frp il mouse è rappresentato tramite due variabili che cambiano valore nel tempo, x e y sono due stream di valori NB: forse più semplice fare l'esempio del sensore di temperatura
+
+\subsection{Caratteristiche paradigma FRP}
 I concetti chiave alla base del paradigma FRP sono i due tipi di dato \textit{Behavior} e \textit{Event}, e tipicamente dieci operazioni basiche chiamate \textit{primitive}. Alcuni sistemi FRP non fanno distinzione, modellando entrambi i due tipi di dato con il concetto \textit{Signal}:
 \begin{description}
     \item[Behavior] - Modella valori che variano nel tempo. Altri sinonimi di behavior sono \textit{Property} o \textit{Cell}. I behavior modellano lo stato, valori che possono essere ottenuti in qualsiasi momento.
@@ -52,9 +56,10 @@ Le seguenti dieci primitive sono le operazioni basiche che tipicamente sono pres
     \item[Never] - Definisce uno stream che non si attiva mai.
     \item[Constant] - Un behavior definito tramite questa primitiva assume un valore costante che non può essere cambiato.
     \item[Sample] - Estrae il valore di un behaviour.
-    \item[Switch] - Primitiva, chiamata anche \textit{flatten} o \textit{join}, che permette di modificare dinamicamente il grafo delle dipendenze
+    \item[Switch] - Primitiva, chiamata anche \textit{flatten} o \textit{join}, che permette di modificare dinamicamente il grafo delle dipendenze.
 \end{description}
 
+\subsection{Lifecycle Programma FRP}
 Un programma FRP è quindi un insieme di behavior e event, costruito partendo da valori statici (che non variano nel tempo) e/o altri behavior/event. Questi sostituiscono il \textit{pattern Observer} fornendo un sistema per programmare logica event-driven in modo componibile/modulare, ovvero definire reazioni al verificarsi di un evento (un input o stream di dati). L' esecuzione di un programma FRP può essere suddivisa in 3 step:
 \begin{description}
     \item[Inizializzazione] - Allo startup del programma gli statement vengono convertiti in un grafo orientato in-memory in modo da rappresentare le dipendenze tra gli stream di dati.
@@ -67,6 +72,7 @@ Un programma FRP è quindi un insieme di behavior e event, costruito partendo da
 \includegraphics[width=0.8\textwidth]{img/frp-scala1.png}
 \caption{Lifecycle Programma FRP}
 \end{figure}
+
 
 \section{Casi d'uso}
 
