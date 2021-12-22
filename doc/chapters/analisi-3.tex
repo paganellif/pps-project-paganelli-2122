@@ -1,11 +1,15 @@
 \documentclass[../main.tex]{subfiles}
 
 \begin{document}
-In questa sezione si analizzano alcune delle librerie scelte per la sperimentazione del paradigma FRP in Scala.
+In questa sezione si analizzano alcune delle librerie scelte per la sperimentazione del paradigma FRP in Scala. Aspetti cruciali dell'analisi delle librerie sono la correttezza rispetto la definizione del paradigma FRP (discussa nel capitolo 2), lo stato attuale della libreria (active, maintenance o EOL) ed il supporto a Scala.
 
-\section{Confronto Librerie}
+La sperimentazione è stata effettuata sviluppando gli stessi esempi con le diverse librerie in analisi: \textit{Sodium}, \textit{Reactify}. Gli esempi sviluppati sono i seguenti:
+\begin{itemize}
+    \item Contatore/ticker: flusso di cambiamenti al valore del contatore, al quale è associata come reazione il calcolo dei millisecondi trascorsi e la stampa del valore.
+    \item Sensore di temperatura: flusso di rilevamenti simulati di molteplici sensori di temperatura e lavorazioni sui valori per estrarre altri valori come temperatura media e spikes.
+\end{itemize}
 
-\subsection{Sodium}
+\section{Sodium}
 La libreria open-source Sodium è stata progettata e sviluppata da Stephen Blackheath e Anthony Jones (più altri collaboratori) per fornire una libreria production-ready in diversi linguaggi, tra cui Scala, per promuovere la vera definizione del paradigma FRP e per realizzare un riferimento/benchmark per future librerie.
 
 \begin{table}[H]
@@ -28,7 +32,7 @@ La libreria open-source Sodium è stata progettata e sviluppata da Stephen Black
 \caption{Main Info Libreria Sodium}
 \end{table}
 
-\subsection{Reactify}
+\section{Reactify}
 Reactify è una libreria open-source che permette di sviluppare sistemi col paradigma FRP fornendo un insieme limitato di concetti rispetto ad altre librerie come Sodium. Il programma viene espresso in termini di variabili che cambiano (\textit{Var}) o non cambiano (\textit{Val}) valore nel tempo e nel definire una reazione al cambiamento: tutte le primitive tipiche del paradigma FRP non sono modellate la libreria, la quale permette di usare qualsiasi funzionalità di Scala direttamente.
 
 \begin{table}[H]
