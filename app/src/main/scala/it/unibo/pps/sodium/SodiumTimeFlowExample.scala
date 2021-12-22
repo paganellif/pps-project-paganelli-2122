@@ -11,10 +11,13 @@ object SodiumTimeFlowExample extends App {
 
   val currentTime: StreamSink[Long] = new StreamSink[Long]()
 
-  currentTime.map(ct => ct - startTime.sample()).listen(ms => println(s"ms: $ms"))
+  // Map, sample primitive
+  currentTime.map(ct => ct - startTime.sample())
+    .listen(ms => println(s"ms: $ms"))
 
   new Thread(() => {
     while(true) {
+      // Stream firing
       currentTime.send(System.currentTimeMillis())
       sleep(500)
     }
