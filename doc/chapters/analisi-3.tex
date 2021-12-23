@@ -1,15 +1,16 @@
 \documentclass[../main.tex]{subfiles}
 
 \begin{document}
-In questa sezione si analizzano alcune delle librerie scelte per la sperimentazione del paradigma FRP in Scala. Aspetti cruciali dell'analisi delle librerie sono la correttezza rispetto la definizione del paradigma FRP (discussa nel capitolo 2), lo stato attuale della libreria (active, maintenance o EOL) ed il supporto a Scala.
-
-La sperimentazione è stata effettuata sviluppando gli stessi esempi con le diverse librerie in analisi: \textit{Sodium}, \textit{Reactify}. Gli esempi sviluppati sono i seguenti:
+In questa sezione si analizzano alcune delle librerie scelte per la sperimentazione del paradigma FRP in Scala. Aspetti cruciali dell'analisi delle librerie sono la correttezza rispetto la definizione del paradigma FRP (discussa nel capitolo 2), lo stato attuale della libreria (active, maintenance o EOL) ed il supporto a Scala. La sperimentazione è stata effettuata sviluppando gli stessi esempi con le diverse librerie in analisi: \textit{Sodium}, \textit{Reactify}. Gli esempi sviluppati sono i seguenti:
 \begin{itemize}
-    \item Contatore/ticker: flusso di cambiamenti al valore del contatore, al quale è associata come reazione il calcolo dei millisecondi trascorsi e la stampa del valore.
-    \item Sensore di temperatura: flusso di rilevamenti simulati di sensori di temperatura e lavorazioni sui valori per estrarre altri valori come temperatura media e spikes. 
+    \item Sensore di temperatura (\textit{XThermalManagerExample}): flusso di rilevamenti simulati di sensori di temperatura e lavorazioni sui valori per estrarre altri valori come temperatura media e spikes.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.9\textwidth]{img/frp-scala-Page-3.drawio.png}
+        \caption{Grafo delle dipendenze: temperatura media e spikes}
+    \end{figure}
+    \item Contatore/ticker (\textit{XTimeFlowExample}): flusso di cambiamenti al valore del contatore, al quale è associata come reazione il calcolo dei millisecondi trascorsi e la stampa del valore.
 \end{itemize}
-
-
 
 \section{Sodium}
 La libreria open-source Sodium è stata progettata e sviluppata da Stephen Blackheath e Anthony Jones (più altri collaboratori) per fornire una libreria production-ready in diversi linguaggi, tra cui Scala, per promuovere la vera definizione del paradigma FRP e per realizzare un riferimento/benchmark per future librerie.
