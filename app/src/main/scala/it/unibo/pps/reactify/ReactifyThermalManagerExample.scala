@@ -1,13 +1,21 @@
 package it.unibo.pps.reactify
 
-import reactify.{Dep, Var}
+import reactify.{Channel, Dep, Val, Var}
+
+import scala.jdk.DoubleAccumulator
 
 case class  ReactifyThermalManager(tempSensor: ReactifyTempSensor, thresholdTemp: Var[Double]) {
-  def start(): Unit = tempSensor.start()
 
-  def sumTemp: Var[Double] = Var(0.0)
+  private var _sum: Var[Double] = Var[Double](0.0)
+  def sumTemp: Val[Double] = Val[Double](_sum)
+
+  def start(): Unit = {
+    tempSensor.temp.attach(t => _sum.set(_sum.get + t))
+    tempSensor.start()
+  }
 
   def log(): Unit = {
+    tempSensor.temp.attach(t => println(s"[${Thread.currentThread().getName}] temp: $t"))
     sumTemp.attach(t => println(s"[${Thread.currentThread().getName}] sum: $t"))
   }
 }
