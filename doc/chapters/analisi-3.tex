@@ -10,6 +10,11 @@ In questa sezione si analizzano alcune delle librerie scelte per la sperimentazi
         \caption{Grafo delle dipendenze: temperatura media e spikes}
     \end{figure}
     \item Contatore/ticker (\textit{XTimeFlowExample}): flusso di cambiamenti al valore del contatore, al quale è associata come reazione il calcolo dei millisecondi trascorsi e la stampa del valore.
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=0.7\textwidth]{img/frp-scala-Page-4.drawio.png}
+        \caption{Grafo delle dipendenze: timer}
+    \end{figure}
 \end{itemize}
 
 \section{Sodium}
@@ -36,7 +41,7 @@ La libreria open-source Sodium è stata progettata e sviluppata da Stephen Black
 \end{table}
 
 \section{Reactify}
-Reactify è una libreria open-source che permette di sviluppare sistemi col paradigma FRP fornendo un insieme limitato di concetti rispetto ad altre librerie come Sodium. Il programma viene espresso in termini di variabili che cambiano (\textit{Var}) o non cambiano (\textit{Val}) valore nel tempo e nel definire una reazione al cambiamento: tutte le primitive tipiche del paradigma FRP non sono modellate la libreria, la quale permette di usare qualsiasi funzionalità di Scala direttamente.
+Reactify è una libreria open-source che permette di sviluppare sistemi col paradigma FRP fornendo un insieme limitato di concetti rispetto ad altre librerie come Sodium. Il programma viene espresso in termini di variabili che cambiano (\textit{Var}) o non cambiano (\textit{Val}) valore nel tempo e nel definire una reazione al cambiamento: tutte le primitive tipiche del paradigma FRP non sono fornite dalla libreria, la quale permette di usare qualsiasi funzionalità di Scala direttamente.
 
 \begin{table}[H]
 \centering
