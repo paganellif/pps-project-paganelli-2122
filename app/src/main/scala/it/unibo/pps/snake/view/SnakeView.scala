@@ -21,6 +21,7 @@ case class SnakeView(widthView: Int = 500, heightView: Int = 500) extends JFrame
 
   def init(): Unit = {
     setSize(widthView, heightView)
+    setTitle("FRP Snake")
     val snakeController: SnakeController = SnakeController(directionInput, statusInput, speedInput, Snake(Array(((widthView/2).round, (heightView/2).round))))
 
     val snakeVisualizerPanel: SnakeVisualizerPanel = SnakeVisualizerPanel(widthView, heightView, snakeController.snakeOutput(), null)
@@ -70,6 +71,7 @@ case class SnakeView(widthView: Int = 500, heightView: Int = 500) extends JFrame
     cp.setLayout(lm)
     cp.add(BorderLayout.CENTER, snakeVisualizerPanel)
     setContentPane(cp)
+    setLocationRelativeTo(null)
     setVisible(true)
   }
 }
