@@ -1,6 +1,6 @@
-package task;
+package pcd.task;
 
-import common.*;
+import pcd.common.*;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;

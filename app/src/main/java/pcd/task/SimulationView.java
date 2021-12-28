@@ -1,7 +1,7 @@
-package task;
+package pcd.task;
 
-import common.Body;
-import common.VisualizerPanel;
+import pcd.common.Body;
+import pcd.common.VisualizerPanel;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;

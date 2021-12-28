@@ -1,6 +1,4 @@
-package task;
-
-import actor.locale.SimulationView;
+package pcd.task;
 
 public class ApplicationMain {
     public static void main(String[] args) {

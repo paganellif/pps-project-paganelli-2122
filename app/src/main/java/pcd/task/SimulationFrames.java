@@ -1,6 +1,6 @@
-package task;
+package pcd.task;
 
-import common.Body;
+import pcd.common.Body;
 
 import java.util.LinkedList;
 import java.util.List;

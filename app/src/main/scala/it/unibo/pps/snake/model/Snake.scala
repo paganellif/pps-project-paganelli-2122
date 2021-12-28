@@ -1,19 +1,44 @@
-/*
-package it.unibo.pps.snake.test
+package it.unibo.pps.snake.model
 
-import scala.collection.mutable.ListBuffer
+import it.unibo.pps.snake.model.Directions.Direction
+import it.unibo.pps.snake.model.World.Position
 
-case class Snake(override val body: ListBuffer[Position]) extends MultiItem(body) with DynamicItem {
-  def eat(food: Food): ListBuffer[Position] = body.addOne(food.position)
-  override def move(): ListBuffer[Position] = this.direction match {
-    case Directions.RIGHT => body.remove(body.size - 1); body.addOne(Position(this.head.x + 1, this.head.y))
-    case Directions.LEFT => body.remove(body.size - 1); body.addOne(Position(this.head.x - 1, this.head.y))
-    case Directions.DOWN => body.remove(body.size - 1); body.addOne(Position(this.head.x, this.head.y + 1))
-    case Directions.UP => body.remove(body.size - 1); body.addOne(Position(this.head.x, this.head.y - 1))
-  }
+trait Snake {
 
-  def turn(direction: Directions.Direction): Unit = this.direction = direction
+  var body: Array[Position]
+
+  val head: Position
+
+  val isKnotted: Boolean
+
+  val reversed: Array[Position]
+
+  def move(direction: Directions.Direction): Array[Position]
+
+  def increase(position: Position): Array[Position]
 }
 
-case class Food(position: Position, score: Int) extends SingleItem(position) with StaticItem
-*/
+object Snake {
+
+  def apply(body: Array[Position]): Snake = SnakeImpl(body)
+
+  private case class SnakeImpl(var body: Array[Position]) extends Snake {
+
+    override val head: Position = body.head
+
+    override val isKnotted: Boolean = body.foldRight(false)((elem1, acc) => {
+      if(!acc) body.count(elem2 => elem1 == elem2) > 1 else acc
+    })
+
+    override val reversed: Array[Position] = body.reverse
+
+    override def move(direction: Direction): Array[Position] = direction match {
+      case Directions.RIGHT => Array.from(body.init).prepended((head._1 + 10, head._2))
+      case Directions.LEFT  => Array.from(body.init).prepended((head._1 - 10, head._2))
+      case Directions.UP    => Array.from(body.init).prepended((head._1, head._2 - 10))
+      case Directions.DOWN  => Array.from(body.init).prepended((head._1, head._2 + 10))
+    }
+
+    override def increase(position: Position): Array[Position] = body.prepended(position)
+  }
+}

@@ -1,7 +1,7 @@
-package concurrent;
+package pcd.concurrent;
 
-import common.Body;
-import common.BodyCouple;
+import pcd.common.Body;
+import pcd.common.BodyCouple;
 import java.util.List;
 import java.util.concurrent.CyclicBarrier;
 

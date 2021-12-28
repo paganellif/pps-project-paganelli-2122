@@ -7,9 +7,9 @@ import org.scalatest.matchers.should
 import org.scalatestplus.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
-class AppSuite extends AnyFunSpec with should.Matchers {
-  describe("A snake"){
-    def snake = Snake(Array((1,1),(1,2),(1,3)))
+class SnakeTest extends AnyFunSpec with should.Matchers {
+  describe("A snake [(1,1),(1,2),(1,1)]"){
+    def snake = Snake(Array((1,1),(1,2),(1,1)))
     it("should be knotted") {
       assert(snake.isKnotted)
     }

@@ -48,6 +48,12 @@ dependencies {
     // https://mvnrepository.com/artifact/com.tngtech.archunit/archunit
     implementation 'com.tngtech.archunit:archunit:0.22.0'
 
+    compileOnly 'org.projectlombok:lombok:1.18.22'
+    annotationProcessor 'org.projectlombok:lombok:1.18.22'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.22'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
+
     // Use Scalatest for testing our library
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.scalatest:scalatest_2.13:3.3.0-SNAP3'

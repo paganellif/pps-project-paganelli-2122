@@ -1,6 +1,6 @@
-package concurrent;
+package pcd.concurrent;
 
-import common.*;
+import pcd.common.*;
 
 import java.util.Collections;
 import java.util.LinkedList;
