@@ -22,7 +22,7 @@ case class SnakeView(widthView: Int = 500, heightView: Int = 500) extends JFrame
   def init(): Unit = {
     setSize(widthView, heightView)
     setTitle("FRP Snake")
-    val snakeController: SnakeController = SnakeController(directionInput, statusInput, speedInput, Snake(Array(((widthView/2).round, (heightView/2).round))))
+    val snakeController: SnakeController = SnakeController(directionInput, statusInput, speedInput, (0,widthView,0,heightView))
 
     val snakeVisualizerPanel: SnakeVisualizerPanel = SnakeVisualizerPanel(widthView, heightView, snakeController.snakeOutput(), null)
 
@@ -44,16 +44,16 @@ case class SnakeView(widthView: Int = 500, heightView: Int = 500) extends JFrame
       }
 
       override def keyReleased(e: KeyEvent): Unit = e.getKeyCode match {
-        case KeyEvent.VK_LEFT => println("released left")
-        case KeyEvent.VK_RIGHT => println("released right")
-        case KeyEvent.VK_UP => println("released up")
-        case KeyEvent.VK_DOWN => println("released down")
-        case KeyEvent.VK_S => println("released s")
-        case KeyEvent.VK_Q => println("released q")
-        case KeyEvent.VK_R => println("released r")
-        case KeyEvent.VK_P => println("released p")
-        case KeyEvent.VK_U => println("released u")
-        case KeyEvent.VK_D => println("released d")
+        case KeyEvent.VK_LEFT => println(s"${directionInput.sample()}")
+        case KeyEvent.VK_RIGHT => println(s"${directionInput.sample()}")
+        case KeyEvent.VK_UP => println(s"${directionInput.sample()}")
+        case KeyEvent.VK_DOWN => println(s"${directionInput.sample()}")
+        case KeyEvent.VK_S => println(s"${statusInput.sample()}")
+        case KeyEvent.VK_Q => println(s"${statusInput.sample()}")
+        case KeyEvent.VK_R => println(s"${statusInput.sample()}")
+        case KeyEvent.VK_P => println(s"${statusInput.sample()}")
+        case KeyEvent.VK_U => println(s"${speedInput.sample()}")
+        case KeyEvent.VK_D => println(s"${speedInput.sample()}")
         case _ => println("Unknown Command")
       }
     })
