@@ -16,6 +16,4 @@ object Directions extends Enumeration {
 object World {
   type Position = (Int,Int)
   type Boundary = (Int,Int,Int,Int)
-
-
 }
