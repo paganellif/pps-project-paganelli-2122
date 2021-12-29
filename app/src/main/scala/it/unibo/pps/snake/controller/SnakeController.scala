@@ -18,7 +18,8 @@ case class SnakeController(
 
   def start(): Unit = executor.execute(engine)
 
-  def snakeOutput(): Stream[Snake] = engine.ticker.accum(initSnake, (e: Event, s: Snake) => s.move(directionInput.sample())).updates()
+  def snakeOutput(): Stream[Snake] = engine.ticker.accum(initSnake,
+    (e: Event, s: Snake) => s.move(directionInput.sample()).getOrElse(s)).updates()
 
   def isKnotted: Stream[Snake] = snakeOutput().filter(s => s.isKnotted)
 

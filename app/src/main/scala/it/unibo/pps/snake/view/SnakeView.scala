@@ -1,14 +1,14 @@
 package it.unibo.pps.snake.view
 
-import io.github.sodium.{Cell, CellSink}
+import io.github.sodium.CellSink
 import it.unibo.pps.snake.controller.{SnakeController, Status}
 import it.unibo.pps.snake.controller.Status.Status
-import it.unibo.pps.snake.model.{Directions, Snake}
+import it.unibo.pps.snake.model.Directions
 import it.unibo.pps.snake.model.Directions.Direction
 
 import java.awt.{BorderLayout, LayoutManager}
 import java.awt.event.{KeyEvent, KeyListener, WindowAdapter, WindowEvent}
-import javax.swing.{JFrame, JPanel, SwingUtilities}
+import javax.swing.{JFrame, JPanel}
 
 case class SnakeView(widthView: Int = 500, heightView: Int = 500) extends JFrame() {
   // Initial default direction: 1 right
@@ -71,6 +71,7 @@ case class SnakeView(widthView: Int = 500, heightView: Int = 500) extends JFrame
     cp.setLayout(lm)
     cp.add(BorderLayout.CENTER, snakeVisualizerPanel)
     setContentPane(cp)
+    setResizable(false)
     setLocationRelativeTo(null)
     setVisible(true)
   }
