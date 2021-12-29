@@ -24,7 +24,7 @@ case class SnakeView(widthView: Int = 500, heightView: Int = 500) extends JFrame
     setTitle("FRP Snake")
     val snakeController: SnakeController = SnakeController(directionInput, statusInput, speedInput, (0,widthView,0,heightView))
 
-    val snakeVisualizerPanel: SnakeVisualizerPanel = SnakeVisualizerPanel(widthView, heightView, snakeController.snakeOutput(), null)
+    val snakeVisualizerPanel: SnakeVisualizerPanel = SnakeVisualizerPanel(widthView, heightView, speedInput)
 
     this.addKeyListener(new KeyListener {
       override def keyTyped(e: KeyEvent): Unit = null

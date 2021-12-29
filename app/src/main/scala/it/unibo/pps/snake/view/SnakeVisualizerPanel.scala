@@ -1,12 +1,12 @@
 package it.unibo.pps.snake.view
 
-import io.github.sodium.Stream
+import io.github.sodium.{Cell, Stream}
 import it.unibo.pps.snake.model.Snake
 
 import java.awt.{Graphics, Graphics2D, RenderingHints}
 import javax.swing.JPanel
 
-case class SnakeVisualizerPanel(widthView: Int, heightView: Int, snake: Stream[Snake], foods: Stream[List[(Int,Int)]]) extends JPanel {
+case class SnakeVisualizerPanel(widthView: Int, heightView: Int, speed: Cell[Int]) extends JPanel {
 
   private var tmpSnake: Option[Snake] = Option.empty
 
@@ -26,7 +26,7 @@ case class SnakeVisualizerPanel(widthView: Int, heightView: Int, snake: Stream[S
       g2.drawString(new String(Character.toChars(0x1F40D)), food._1, food._2)
     })*/
 
-    g2.drawString("[S]tart [Q]uit [R]esume [P]ause - Speed: [U]p [D]own", 15, 15)
+    g2.drawString(s"[S]tart [Q]uit [R]esume [P]ause - \nSpeed: ${speed.sample()} [U]p [D]own", 15, 15)
 
   }
 
