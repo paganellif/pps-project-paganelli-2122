@@ -15,7 +15,7 @@ trait Food {
   /**
    * The score of the food.
    *
-   * @return a <code>Score</code>
+   * @return <code>Score</code>
    * @see Food#Score
    */
   def score: Score
@@ -23,7 +23,7 @@ trait Food {
   /**
    * The unicode emoji representation of the food.
    *
-   * @return a <code>String</code>
+   * @return <code>String</code>
    * @see https://unicode.org/emoji/charts/full-emoji-list.html
    */
   def unicodeEmojiCode: String
