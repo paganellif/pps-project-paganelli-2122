@@ -5,12 +5,15 @@ import it.unibo.pps.snake.controller.{SnakeController, Status}
 import it.unibo.pps.snake.controller.Status.Status
 import it.unibo.pps.snake.model.Directions
 import it.unibo.pps.snake.model.Directions.Direction
+import org.slf4j.LoggerFactory
 
 import java.awt.{BorderLayout, LayoutManager}
 import java.awt.event.{KeyEvent, KeyListener, WindowAdapter, WindowEvent}
 import javax.swing.{JFrame, JPanel}
 
 case class SnakeView(widthView: Int = 500, heightView: Int = 500) extends JFrame() {
+  private val logger = LoggerFactory.getLogger("SnakeView")
+
   // Initial default direction: 1 right
   private val directionInput: CellSink[Direction] = new CellSink[Direction](Directions.RIGHT)
 
@@ -40,21 +43,21 @@ case class SnakeView(widthView: Int = 500, heightView: Int = 500) extends JFrame
         case KeyEvent.VK_P => statusInput.send(Status.PAUSE)
         case KeyEvent.VK_U => speedInput.send(speedInput.sample() + 1)
         case KeyEvent.VK_D => speedInput.send(if (speedInput.sample() > 1) speedInput.sample() - 1 else 1)
-        case _ => println("Unknown Command")
+        case _ => logger.error("Unknown Command")
       }
 
       override def keyReleased(e: KeyEvent): Unit = e.getKeyCode match {
-        case KeyEvent.VK_LEFT => println(s"${directionInput.sample()}")
-        case KeyEvent.VK_RIGHT => println(s"${directionInput.sample()}")
-        case KeyEvent.VK_UP => println(s"${directionInput.sample()}")
-        case KeyEvent.VK_DOWN => println(s"${directionInput.sample()}")
-        case KeyEvent.VK_S => println(s"${statusInput.sample()}")
-        case KeyEvent.VK_Q => println(s"${statusInput.sample()}")
-        case KeyEvent.VK_R => println(s"${statusInput.sample()}")
-        case KeyEvent.VK_P => println(s"${statusInput.sample()}")
-        case KeyEvent.VK_U => println(s"${speedInput.sample()}")
-        case KeyEvent.VK_D => println(s"${speedInput.sample()}")
-        case _ => println("Unknown Command")
+        case KeyEvent.VK_LEFT => logger.debug(s"${directionInput.sample()}")
+        case KeyEvent.VK_RIGHT => logger.debug(s"${directionInput.sample()}")
+        case KeyEvent.VK_UP => logger.debug(s"${directionInput.sample()}")
+        case KeyEvent.VK_DOWN => logger.debug(s"${directionInput.sample()}")
+        case KeyEvent.VK_S => logger.debug(s"${statusInput.sample()}")
+        case KeyEvent.VK_Q => logger.debug(s"${statusInput.sample()}")
+        case KeyEvent.VK_R => logger.debug(s"${statusInput.sample()}")
+        case KeyEvent.VK_P => logger.debug(s"${statusInput.sample()}")
+        case KeyEvent.VK_U => logger.debug(s"${speedInput.sample()}")
+        case KeyEvent.VK_D => logger.debug(s"${speedInput.sample()}")
+        case _ => logger.error("Unknown Command")
       }
     })
 
@@ -64,8 +67,8 @@ case class SnakeView(widthView: Int = 500, heightView: Int = 500) extends JFrame
     })
 
     snakeController.start()
-    snakeController.snakeOutput().listen(s => snakeVisualizerPanel.repaintSnake(s))
-    snakeController.foodOutput().listen(f => snakeVisualizerPanel.repaintFood(f))
+    snakeController.output.listen(sf => {snakeVisualizerPanel.repaintSnake(sf._1); snakeVisualizerPanel.repaintFood(sf._2)})
+    snakeController.scoreOutput.listen(s => snakeVisualizerPanel.repaintScore(s))
 
     val cp: JPanel = new JPanel()
     val lm: LayoutManager = new BorderLayout()
