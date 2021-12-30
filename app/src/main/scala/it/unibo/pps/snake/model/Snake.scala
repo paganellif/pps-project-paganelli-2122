@@ -38,12 +38,20 @@ trait Snake {
   def move(direction: Directions.Direction): Option[Snake]
 
   /**
-   * Return a new Snake increased with a specific position prepended.
+   * Return a new Snake increased in a specific direction.
    *
-   * @param position the position to be added
+   * @param direction the direction in which the snake is to be increased.
    * @return <code>Option[Snake]</code>
    */
-  def increase(position: Position): Option[Snake]
+  def increase(direction: Directions.Direction): Option[Snake]
+
+  /**
+   * Return true if the position is near to the head of the snake, false otherwise
+   *
+   * @param position the position that has to be checked if it is near to the head of the snake
+   * @return <code>Boolean</code>
+   */
+  def isNearTo(position: Position): Boolean
 }
 
 object Snake {
@@ -78,6 +86,15 @@ object Snake {
       case Directions.DOWN  => if(!this.isKnotted) Snake(Array.from(body.init).prepended((head._1, head._2 + deltaMove))).toOptional else Option.empty
     }
 
-    override def increase(position: Position): Option[Snake] = if(!this.isKnotted) Snake(body.prepended(position)).toOptional else Option.empty
+    override def increase(direction: Direction): Option[Snake] = direction match {
+      case Directions.RIGHT => if(!this.isKnotted) Snake(Array.from(body).prepended((head._1 + deltaMove, head._2))).toOptional else Option.empty
+      case Directions.LEFT  => if(!this.isKnotted) Snake(Array.from(body).prepended((head._1 - deltaMove, head._2))).toOptional else Option.empty
+      case Directions.UP    => if(!this.isKnotted) Snake(Array.from(body).prepended((head._1, head._2 - deltaMove))).toOptional else Option.empty
+      case Directions.DOWN  => if(!this.isKnotted) Snake(Array.from(body).prepended((head._1, head._2 + deltaMove))).toOptional else Option.empty
+    }
+
+    override def isNearTo(position: Position): Boolean =
+      (Math.abs(this.head._1 - position._1) <= (deltaMove / 2).round) &&
+        (Math.abs(this.head._2 - position._2) <= (deltaMove / 2).round)
   }
 }

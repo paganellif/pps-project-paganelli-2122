@@ -1,7 +1,9 @@
 package it.unibo.pps.snake.model
 
 import it.unibo.pps.snake.model.Food.Score
-import it.unibo.pps.snake.model.World.Position
+import it.unibo.pps.snake.model.World.{Boundary, Position}
+
+import scala.util.Random
 
 trait Food {
   /**
@@ -41,6 +43,24 @@ object Food {
    */
   def createHealthyFood(position: Position): Food =
     FoodImpl(position, 100, new String(Character.toChars(0x1F40D)))
+
+  /**
+   * TODO: add docs
+   * @param positionToBeExcluded
+   * @param boundary
+   * @param nFood
+   * @return
+   */
+  def createRandomHealthyFoods(positionToBeExcluded: Array[Position], boundary: Boundary, nFood: Int): Array[Food] = {
+    // For comprehension random food creation
+    (for {
+      i <- 0 until nFood
+      position = (Random.between((boundary._1/10).round*10, (boundary._2/10).round*10),
+        Random.between((boundary._3/10).round*10, (boundary._4/10)*10))
+      // TODO: fix generate random while if condition is true
+      if !positionToBeExcluded.contains(position)
+    } yield Food.createHealthyFood(position)).toArray
+  }
 
   /**
    *

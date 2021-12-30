@@ -66,9 +66,11 @@ case class SnakeView(widthView: Int = 500, heightView: Int = 500) extends JFrame
       override def windowClosed(e: WindowEvent): Unit = System.exit(-1)
     })
 
+
     snakeController.start()
     snakeController.output.listen(sf => {snakeVisualizerPanel.repaintSnake(sf._1); snakeVisualizerPanel.repaintFood(sf._2)})
     snakeController.scoreOutput.listen(s => snakeVisualizerPanel.repaintScore(s))
+    // TODO: add timing output -> show timer in view
 
     val cp: JPanel = new JPanel()
     val lm: LayoutManager = new BorderLayout()
