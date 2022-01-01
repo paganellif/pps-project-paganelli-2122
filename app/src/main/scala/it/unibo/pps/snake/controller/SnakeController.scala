@@ -90,12 +90,12 @@ case class SnakeController(
    *
    * @return <code>Stream[Snake]</code>
    */
-  def isKnotted: Stream[Snake] = output.filter(s => s._1.isKnotted).map(o => o._1)
+  def isKnottedOutput: Stream[Snake] = output.filter(s => s._1.isKnotted).map(o => o._1)
 
   /**
    * The size of the snake: modified when the snake is moved or increased.
    *
    * @return <code>Stream[Int]</code>
    */
-  def snakeSize(): Stream[Int] = output.map(s => s._1.body.length)
+  def snakeSizeOutput(): Stream[Int] = output.map(s => s._1.body.length)
 }
