@@ -12,7 +12,7 @@ import java.awt.event.{KeyEvent, KeyListener, WindowAdapter, WindowEvent}
 import javax.swing.{JFrame, JPanel}
 
 case class SnakeView(widthView: Int = 500, heightView: Int = 500) extends JFrame() {
-  private val logger = LoggerFactory.getLogger("SnakeView")
+  private val logger = LoggerFactory.getLogger(SnakeView.getClass)
 
   // Initial default direction: 1 right
   private val directionInput: CellSink[Direction] = new CellSink[Direction](Directions.RIGHT)
@@ -65,7 +65,6 @@ case class SnakeView(widthView: Int = 500, heightView: Int = 500) extends JFrame
       override def windowClosing(e: WindowEvent): Unit = System.exit(-1)
       override def windowClosed(e: WindowEvent): Unit = System.exit(-1)
     })
-
 
     snakeController.start()
     snakeController.output.listen(sf => {snakeVisualizerPanel.repaintSnake(sf._1); snakeVisualizerPanel.repaintFood(sf._2)})

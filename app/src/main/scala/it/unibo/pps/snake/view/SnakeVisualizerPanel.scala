@@ -1,6 +1,6 @@
 package it.unibo.pps.snake.view
 
-import io.github.sodium.{Cell, Stream}
+import io.github.sodium.Cell
 import it.unibo.pps.snake.model.Food.Score
 import it.unibo.pps.snake.model.{Food, Snake}
 
@@ -27,7 +27,7 @@ case class SnakeVisualizerPanel(widthView: Int, heightView: Int, speed: Cell[Int
 
     if(tmpFood.isDefined)
       tmpFood.get.foreach(food => {
-        g2.drawString("f", food.position._1, food.position._2)
+        g2.drawString(if(food.score > 0) "h" else "j", food.position._1, food.position._2)
       })
 
     g2.drawString("[S]tart [Q]uit [R]esume [P]ause", 15, 15)

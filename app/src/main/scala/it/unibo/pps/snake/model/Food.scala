@@ -21,14 +21,6 @@ trait Food {
    * @see Food#Score
    */
   def score: Score
-
-  /**
-   * The unicode emoji representation of the food.
-   *
-   * @return <code>String</code>
-   * @see https://unicode.org/emoji/charts/full-emoji-list.html
-   */
-  def unicodeEmojiCode: String
 }
 
 /**
@@ -42,16 +34,17 @@ object Food {
    * @return a healty <code>Food</code>
    */
   def createHealthyFood(position: Position): Food =
-    FoodImpl(position, 100, new String(Character.toChars(0x1F40D)))
+    FoodImpl(position, 100)
 
   /**
-   * TODO: add docs
-   * @param positionToBeExcluded
-   * @param boundary
-   * @param nFood
-   * @return
+   * Returns a set of random foods.
+   *
+   * @param positionToBeExcluded positions that should not be included
+   * @param boundary lower and upper limits (x, y) of the game "world"
+   * @param nFood number of foods to be created
+   * @return <code>Array[Food]</code>
    */
-  def createRandomHealthyFoods(positionToBeExcluded: Array[Position], boundary: Boundary, nFood: Int): Array[Food] = {
+  def createRandomFoods(positionToBeExcluded: Array[Position], boundary: Boundary, nFood: Int): Array[Food] = {
     // For comprehension random food creation
     (for {
       i <- 0 until nFood
@@ -59,7 +52,7 @@ object Food {
         Random.between((boundary._3/10).round*10, (boundary._4/10)*10))
       // TODO: fix generate random while if condition is true
       if !positionToBeExcluded.contains(position)
-    } yield Food.createHealthyFood(position)).toArray
+    } yield if((position._1 + position._2) % 2 == 0) Food.createHealthyFood(position) else Food.createJunkFood(position)).toArray
   }
 
   /**
@@ -68,14 +61,13 @@ object Food {
    * @return a junk <code>Food</code>
    */
   def createJunkFood(position: Position): Food =
-    FoodImpl(position, -100, new String(Character.toChars(0x1F35F)))
+    FoodImpl(position, -100)
 
   /**
    * Private base implementation of Food
    *
    * @param position 2D location where to place the food
    * @param score the score associated with this food
-   * @param unicodeEmojiCode the unicode emoji representation of this food
    */
-  private case class FoodImpl(position: Position, score: Score, unicodeEmojiCode: String) extends Food
+  private case class FoodImpl(position: Position, score: Score) extends Food
 }
