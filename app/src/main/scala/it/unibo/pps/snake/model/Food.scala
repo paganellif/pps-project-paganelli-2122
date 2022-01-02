@@ -37,6 +37,14 @@ object Food {
     FoodImpl(position, 100)
 
   /**
+   *
+   * @param position 2D location where to place the food
+   * @return a junk <code>Food</code>
+   */
+  def createJunkFood(position: Position): Food =
+    FoodImpl(position, -100)
+
+  /**
    * Returns a set of random foods.
    *
    * @param positionToBeExcluded positions that should not be included
@@ -54,14 +62,6 @@ object Food {
       if !positionToBeExcluded.contains(position)
     } yield if((position._1 + position._2) % 2 == 0) Food.createHealthyFood(position) else Food.createJunkFood(position)).toArray
   }
-
-  /**
-   *
-   * @param position 2D location where to place the food
-   * @return a junk <code>Food</code>
-   */
-  def createJunkFood(position: Position): Food =
-    FoodImpl(position, -100)
 
   /**
    * Private base implementation of Food
