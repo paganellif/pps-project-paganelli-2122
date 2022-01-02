@@ -24,6 +24,24 @@ case class SnakeController(
   private val executor: ExecutorService = Executors.newFixedThreadPool(threadPoolSize)
   private val engine: Engine = Engine(statusInput, speedInput)
 
+  implicit class BoundedSnake(snake: Snake) {
+    def bound(boundary: Boundary): Snake = {
+      Snake(snake.body.map(pos => {
+        var tmpPos = pos
+        if (pos._1 > boundary._2) tmpPos = (boundary._1 + 10, tmpPos._2)
+        else if (pos._1 <= boundary._1) tmpPos = (boundary._2 - 10, tmpPos._2)
+        else tmpPos = (pos._1, tmpPos._2)
+
+        if (pos._2 > boundary._4) tmpPos = (tmpPos._1, boundary._3 + 10)
+        else if (pos._2 <= boundary._3) tmpPos = (tmpPos._1, boundary._4 - 10)
+        else tmpPos = (tmpPos._1, pos._2)
+
+        logger.debug(s"pre: ${pos} - post: ${tmpPos}")
+        tmpPos
+      }))
+    }
+  }
+
   def start(): Unit = executor.execute(engine)
 
   /**
@@ -34,7 +52,7 @@ case class SnakeController(
   def output: Stream[(Snake,Array[Food])] = engine.ticker
     .accum((initSnake, initFood), (event: Event, acc: (Snake, Array[Food])) => {
       val tmpD: Direction = directionInput.sample()
-      val tmpS: Snake = acc._1.move(tmpD).getOrElse(acc._1)
+      val tmpS: Snake = acc._1.move(tmpD).getOrElse(acc._1).bound(boundary)
 
       if(acc._2.map(f => f.position).exists(p => tmpS.isNearTo(p))){
         logger.debug("increased snake: new head {}",tmpS.head)
