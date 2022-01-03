@@ -1,6 +1,7 @@
 name: Scala CI with Gradle
 
 on:
+  workflow_dispatch:
   push:
     branches: [ main, dev, 'renovate/*' ]
     paths-ignore: [ 'doc/**/*', '.github/workflows/report.yml']
