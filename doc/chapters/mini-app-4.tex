@@ -31,8 +31,7 @@ Il seguente diagramma rappresenta gli input e gli output dell'applicazione in re
 \caption{Input/Output del programma FRP in relazione alla GUI}
 \end{figure}
 
-\newpage
-Data la definizione in termini FRP degli input e output della applicazione, il seguente diagramma rappresenta il diagramma delle dipendenze che permette all'engine FRP di computare gli output alla modifica dei valori in input:
+Data la definizione degli input e degli output della applicazione, la seguente figura rappresenta il diagramma delle dipendenze, ovvero la logica in termini FRP che permette la computazione degli output in reazione alla modifica dei valori in input:
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.9\textwidth]{img/frp-scala-Page-5.drawio.png}
@@ -41,3 +40,52 @@ Data la definizione in termini FRP degli input e output della applicazione, il s
 \end{document}
 
 \section{Implementazione}
+Il mondo di gioco 2D è modellato come un insieme di punti cardinali (\textit{Position}) e un confine dato dai limiti inferiori e superiori nei due assi x,y (\textit{Boundary}). Sfruttando le \textit{type-classes} fornite da Scala, i due concetti assumono rispettivamente il significato di \textit{Tupla2} (x,y) e \textit{Tupla4} (xMin, xMax, yMin, yMax).
+\begin{lstlisting}[language=Javascript, caption=Definizione dei concetti rappresentanti il mondo 2D di gioco tramite \textit{type-classes}.]
+object World {
+  type Position = (Int,Int)
+  type Boundary = (Int,Int,Int,Int)
+}
+\end{lstlisting}
+
+L'engine FRP della applicazione, ossia la logica che valuta le dipendenze mappando gli input con gli output, è dato da due componenti principali:
+\begin{description}
+  \item[Engine] - Si occupa dell'avanzamento/terminazione del gioco e della velocità di gioco. Lo stream di output di questo componente si attiva con una certo periodo (in millisecondi: \textit{1000 / speedInput.sample}) pilotando la computazione della nuova posizione del serpente. dedicato.
+  \begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{img/frp-scala-Page-6.drawio.png}
+\caption{Diagramma delle classi - FRP Snake}
+\end{figure}
+  \item[SnakeController] - Implementa in termini FRP il core del gioco Snake. I diversi stream di output di questo componente permettono alla parte grafica di aggiornare la GUI in reazione alla attivazione. All'avvio (\textit{start}) del componente viene inizializzato il mondo di gioco, ovvero serpente e cibo, e viene sottomesso il componente \textit{Engine} ad un apposito \textit{ExecutorService}.
+\end{description}
+
+
+\begin{lstlisting}[language=Javascript, caption=Generazione random delle entità "Food" tramite for-comprehension.]
+def createRandomFoods(positionToBeExcluded: Array[Position], boundary: Boundary, nFood: Int): Array[Food] = {
+    (for {
+      i <- 0 until nFood
+      position = (Random.between((boundary._1/10).round*10, (boundary._2/10).round*10), Random.between((boundary._3/10).round*10, (boundary._4/10)*10))
+      if !positionToBeExcluded.contains(position)
+    } yield if((position._1 + position._2) % 2 == 0) Food.createHealthyFood(position) else Food.createJunkFood(position)).toArray
+  }
+\end{lstlisting}
+
+\begin{lstlisting}[language=Javascript, caption=Pimp my Library pattern - Aggiunta feature all'entità \textit{Snake} per vincolare il movimento all'interno del "mondo" di gioco.]
+implicit class BoundedSnake(snake: Snake) {
+    def bound(boundary: Boundary): Snake = {
+      Snake(snake.body.map(pos => {
+        var tmpPos = pos
+        if (pos._1 > boundary._2) tmpPos = (boundary._1 + 10, tmpPos._2)
+        else if (pos._1 <= boundary._1) tmpPos = (boundary._2 - 10, tmpPos._2)
+        else tmpPos = (pos._1, tmpPos._2)
+    
+        if (pos._2 > boundary._4) tmpPos = (tmpPos._1, boundary._3 + 10)
+        else if (pos._2 <= boundary._3) tmpPos = (tmpPos._1, boundary._4 - 10)
+        else tmpPos = (tmpPos._1, pos._2)
+    
+        logger.debug(s"pre: ${pos} - post: ${tmpPos}")
+        tmpPos
+      }))
+    }
+}
+\end{lstlisting}
