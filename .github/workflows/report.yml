@@ -21,6 +21,7 @@ jobs:
           compiler: pdflatex
           args: -interaction=nonstopmode -shell-escape
 
+      # Needed to render TOC
       - name: pdflatex main 2
         uses: dante-ev/latex-action@latest
         with:

@@ -26,6 +26,5 @@ case class SodiumTempSensor(min: Cell[Double], max: Cell[Double], spikeFreq: Cel
       temp.send(currentTemp)
     }, 0, 200, java.util.concurrent.TimeUnit.MILLISECONDS)
   }
-
 }
 
