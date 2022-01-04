@@ -37,7 +37,6 @@ Data la definizione degli input e degli output della applicazione, la seguente f
 \includegraphics[width=0.9\textwidth]{img/frp-scala-Page-5.drawio.png}
 \caption{Grafo delle dipendenze: FRP Snake}
 \end{figure}
-\end{document}
 
 \section{Implementazione}
 Il mondo di gioco 2D è modellato come un insieme di punti cardinali (\textit{Position}) e un confine dato dai limiti inferiori e superiori nei due assi x,y (\textit{Boundary}). Sfruttando le \textit{type-classes} fornite da Scala, i due concetti assumono rispettivamente il significato di \textit{Tupla2} (x,y) e \textit{Tupla4} (xMin, xMax, yMin, yMax).
@@ -60,6 +59,7 @@ L'engine FRP della applicazione, ossia la logica che valuta le dipendenze mappan
 \end{description}
 
 
+
 \begin{lstlisting}[language=Javascript, caption=Generazione random delle entità "Food" tramite for-comprehension.]
 def createRandomFoods(positionToBeExcluded: Array[Position], boundary: Boundary, nFood: Int): Array[Food] = {
     (for {
@@ -70,7 +70,7 @@ def createRandomFoods(positionToBeExcluded: Array[Position], boundary: Boundary,
   }
 \end{lstlisting}
 
-\begin{lstlisting}[language=Javascript, caption=Pimp my Library pattern - Aggiunta feature all'entità \textit{Snake} per vincolare il movimento all'interno del "mondo" di gioco.]
+\begin{lstlisting}[language=Javascript, caption=Pimp My Library pattern - Aggiunta feature all'entità \textit{Snake} per vincolare il movimento all'interno del "mondo" di gioco.]
 implicit class BoundedSnake(snake: Snake) {
     def bound(boundary: Boundary): Snake = {
       Snake(snake.body.map(pos => {
@@ -89,3 +89,5 @@ implicit class BoundedSnake(snake: Snake) {
     }
 }
 \end{lstlisting}
+
+\end{document}
