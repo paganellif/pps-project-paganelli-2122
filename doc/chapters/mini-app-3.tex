@@ -58,8 +58,7 @@ L'engine FRP della applicazione, ossia la logica che valuta le dipendenze mappan
   \item[SnakeController] - Implementa in termini FRP il core del gioco Snake. I diversi stream di output di questo componente permettono alla parte grafica di aggiornare la GUI in reazione alla attivazione. All'avvio (\textit{start}) del componente viene inizializzato il mondo di gioco, ovvero serpente e cibo, e viene sottomesso il componente \textit{Engine} ad un apposito \textit{ExecutorService}.
 \end{description}
 
-
-
+\subsection{Aspetti Interessanti}
 \begin{lstlisting}[language=Javascript, caption=Generazione random delle entità "Food" tramite for-comprehension.]
 def createRandomFoods(positionToBeExcluded: Array[Position], boundary: Boundary, nFood: Int): Array[Food] = {
     (for {

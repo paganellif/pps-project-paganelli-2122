@@ -124,12 +124,52 @@ Reactify è una libreria open-source che permette di sviluppare sistemi col para
 \end{table}
 
 \subsection{ReactifyThermalManagerExample}
-% a differenza di sodium esistono solo var ( == Cell) e val ( == Stream)
-% le dipendenze del grafo sono definite da quello che si inserisce dentro alle val:
-% per definire le dipendenze è possibile usare qualsiasi costrutto fornito da scala (a differenza di sodium che fonirsce le primitive) basandosi su delle var reactify
-% cioè, quando una var cambia valore allora ogni val che contiene il suo riferimento viene ricalcolata in reazione al cambiamento ma NON ESISTONO PRIMITIVE 
+La struttura e il grado delle dipendenze dell'esempio sviluppato utilizzando la libreria Sodium sono gli stessi per l'esempio sviluppato utilizzando la libreria Reactify. 
+
+A differenza di Sodium, la quale fornisce un ampio set di primitive per la definizione del grafo delle dipendenze, in Reactify esistono solo due concetti principali e due primitive:
+\begin{description}
+\item[Var] - Equivalente di Cell in Sodium, definisce una variabile che cambia valore nel tempo.
+\item[Val] - Equivalente (circa) di Stream in Sodium, definisce la dipendenza tra una o più \textit{Var}. Questo significa che ogni modifica al valore delle dipendenze comporta un ricalcolo e quindi una modifica del valore della \textit{Val}.
+\item[Map] - Equivalente della primitiva map in Sodium. Effettua una operazione sul contenuto di una \textit{Var} restituendolo all'interno di una nuova \textit{Var}.
+\item[Attach] - Equivalente della primitiva listen in Sodium. Permette di registrare listeners sia a \textit{Var} che \textit{Val}.
+\item[Set] - Equivalente della primitiva send in Sodium. Permette di cambiare il valore di una \textit{Var}.
+\end{description}
+
+Per poter definire dipendenze più complesse/avanzate rispetto a map/attach è possibile usare qualsiasi costrutto fornito dal linguaggio di programmazione, in questo caso Scala:
+\begin{lstlisting}[language=Javascript, caption=Reactify - Traduzione della parte di grafo delle dipendenze riguardante la temperatura media e gli spike in codice e registrazione listeners]
+private var _sum: Double = 0.0
+val sumTemp: Val[Double] = Val[Double]({ _sum += tempSensor.temp; _sum })
+
+private var _firingCount: Int = 0
+val firingCount: Val[Int] = tempSensor.temp.map(t => { _firingCount += 1; _firingCount })
+
+val avgTemp: Val[Double] = Val[Double](sumTemp / firingCount)
+
+val spikeTemp: Val[Option[Double]] = Val[Option[Double]] {
+  val delta = Math.abs(tempSensor.temp - avgTemp)
+  if(delta > thresholdTemp) Option(delta) else Option.empty
+}
+. . . .
+avgTemp.attach(avg => println(s" avg: $avg"))
+spikeTemp.attach(spike => println(s"spike: $spike"))
+\end{lstlisting}
 
 \subsection{ReactifyTimeFlowExample}
+Come nell'esempio precedente \textit{ReactifyThermalManagerExample} anche in questo caso la struttura e il grafo delle dipendenze adottati sono identici. Anche il numero di righe di codice sviluppate per fare la conversione grafo-codice è lo stesso:
+\begin{lstlisting}[language=Javascript, caption=Reactify - Esempio completo]
+val startTime: Val[Long] = Val(System.currentTimeMillis())
+val currentTime: Var[Long] = Var(System.currentTimeMillis())
 
+val delta: Val[Long] = Val[Long](currentTime - startTime)
+delta.attach(ms => println(s"ms: $ms"))
+
+new Thread(() => {
+  while(true) {
+    currentTime.set(System.currentTimeMillis())
+    sleep(500)
+  }
+}).start()
+\end{lstlisting}
+La variabile \textit{delta}, definita come \textit{Val}, rappresenta la dipendenza tra il tempo corrente e il tempo iniziale. Il tempo iniziale (\textit{startTime}) è definito come \textit{Val} perchè il suo valore non deve cambiare: non essendoci infatti nessuna dipendenza nella sua definizione è garantito che quel valore è costante nel tempo. Il valore del tempo corrente invece è definito come \textit{Var} perchè viene modificato dal thread utilizzando la primitiva \textit{set}.
 \end{document}
 
