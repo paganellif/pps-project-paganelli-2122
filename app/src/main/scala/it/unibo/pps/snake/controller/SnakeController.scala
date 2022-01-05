@@ -1,6 +1,6 @@
 package it.unibo.pps.snake.controller
 
-import io.github.sodium.{Cell, Stream}
+import io.github.sodium.Cell
 import it.unibo.pps.snake.model.Directions.Direction
 import it.unibo.pps.snake.model.Food.Score
 import it.unibo.pps.snake.model.World.Boundary
@@ -43,13 +43,14 @@ case class SnakeController(
   }
 
   def start(): Unit = executor.execute(engine)
+  def stop(): Unit = executor.shutdown()
 
   /**
    * The foods and the snake of the game: modified when the engine ticks.
    *
-   * @return <code>Stream[(Snake,Array[Food])]</code>
+   * @return <code>Cell[(Snake,Array[Food])]</code>
    */
-  def output: Stream[(Snake,Array[Food])] = engine.ticker
+  def output: Cell[(Snake,Array[Food])] = engine.ticker
     .accum((initSnake, initFood), (event: Event, acc: (Snake, Array[Food])) => {
       val tmpD: Direction = directionInput.sample()
       val tmpS: Snake = acc._1.move(tmpD).getOrElse(acc._1).bound(boundary)
@@ -66,21 +67,21 @@ case class SnakeController(
         logger.debug("moved snake in direction {}", tmpD)
         (tmpS, acc._2)
       }
-  }).updates()
+  })
 
   /**
    * The foods of the game: modified when the snake eats a food.
    *
-   * @return <code>Stream[Array[Food]]</code>
+   * @return <code>Cell[Array[Food]]</code>
    */
-  def foodOutput: Stream[Array[Food]] = output.map(sf => sf._2)
+  def foodOutput: Cell[Array[Food]] = output.map(sf => sf._2)
 
   /**
    * The score of the game: modified when the snake eats a food.
    *
-   * @return <code>Stream[Score]</code>
+   * @return <code>Cell[Score]</code>
    */
-  def scoreOutput: Stream[Score] = foodOutput.accum((initFood, 0), (fp: Array[Food], acc: (Array[Food],Score)) => {
+  def scoreOutput: Cell[Score] = foodOutput.updates().accum((initFood, 0), (fp: Array[Food], acc: (Array[Food],Score)) => {
     val foodDiff = fp.diff(acc._1)
     logger.debug(s"previous: ${fp.mkString("Array(", ", ", ")")} - " +
       s"acc: ${acc._1.mkString("Array(", ", ", ")")} - " +
@@ -94,26 +95,26 @@ case class SnakeController(
     } else {
       (fp,acc._2)
     }
-  }).updates().map((fs: (_, Score)) => fs._2)
+  }).map((fs: (_, Score)) => fs._2)
 
   /**
    * The snake of the game: modified when the snake is moved or increased.
    *
-   * @return <code>Stream[Snake]</code>
+   * @return <code>Cell[Snake]</code>
    */
-  def snakeOutput: Stream[Snake] = output.map(sf => sf._1)
+  def snakeOutput: Cell[Snake] = output.map(sf => sf._1)
 
   /**
    * The snake of the game: modified when the snake is knotted.
    *
-   * @return <code>Stream[Snake]</code>
+   * @return <code>Cell[Snake]</code>
    */
-  def isKnottedOutput: Stream[Snake] = output.filter(s => s._1.isKnotted).map(o => o._1)
+  def isKnottedOutput: Cell[Option[Snake]] = output.map(o => if(o._1.isKnotted) Option(o._1) else Option.empty)
 
   /**
    * The size of the snake: modified when the snake is moved or increased.
    *
-   * @return <code>Stream[Int]</code>
+   * @return <code>Cell[Int]</code>
    */
-  def snakeSizeOutput(): Stream[Int] = output.map(s => s._1.body.length)
+  def snakeSizeOutput(): Cell[Int] = output.map(s => s._1.body.length)
 }

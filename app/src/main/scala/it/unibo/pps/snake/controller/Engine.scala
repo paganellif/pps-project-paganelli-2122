@@ -26,7 +26,7 @@ case class Engine(isRunning: Cell[Status], speed: Cell[Int]) extends Runnable {
         case Status.PAUSE => logger.debug("PAUSE STATUS")
         case _ => logger.error("Unknown Status")
       }
-      val freq: Int = (700 / speed.sample()).round
+      val freq: Int = (1000 / speed.sample()).round
       logger.debug(s"engine freq: ${freq}")
       sleep(freq)
     }
