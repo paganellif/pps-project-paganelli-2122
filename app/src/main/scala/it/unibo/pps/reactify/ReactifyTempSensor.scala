@@ -7,7 +7,7 @@ import java.util.Random
 import java.util.concurrent.{Executors, ScheduledExecutorService}
 
 case class ReactifyTempSensor(min: Var[Double], max: Var[Double], spikeFreq: Var[Double]){
-  val temp: Var[Double] = Var[Double](Double.NaN)
+  val temp: Var[Double] = Var[Double](0.0)
 
   private var currentTemp: Double = 0.0
   private val time = BaseTimeValue()

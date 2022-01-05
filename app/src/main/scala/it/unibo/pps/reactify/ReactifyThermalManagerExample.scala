@@ -4,36 +4,31 @@ import reactify.{Val, Var}
 
 case class  ReactifyThermalManager(tempSensor: ReactifyTempSensor, thresholdTemp: Var[Double]) {
 
-  val sumTemp: Var[Double] = Var[Double](0.0)
+  private var _sum: Double = 0.0
+  val sumTemp: Val[Double] = Val[Double]({ _sum += tempSensor.temp; _sum })
 
-  val firingCount: Var[Int] = Var[Int](0)
+  private var _firingCount: Int = 0
+  val firingCount: Val[Int] = tempSensor.temp.map(t => { _firingCount += 1; _firingCount })
 
   val avgTemp: Val[Double] = Val[Double](sumTemp / firingCount)
 
-  val minTemp: Var[Double] = Var[Double](tempSensor.max)
+  private var _minTemp: Double = Double.MaxValue
+  val minTemp: Val[Double] = Val[Double]({if(tempSensor.temp < _minTemp) _minTemp = tempSensor.temp.get; _minTemp })
 
-  val maxTemp: Var[Double] = Var[Double](tempSensor.min)
+  private var _maxTemp: Double = Double.MinValue
+  val maxTemp: Val[Double] = Val[Double]({if(tempSensor.temp > _maxTemp) _maxTemp = tempSensor.temp.get; _maxTemp })
 
-  val spikeTemp: Var[Option[Double]] = Var[Option[Double]] {
+  val spikeTemp: Val[Option[Double]] = Val[Option[Double]] {
     val delta = Math.abs(tempSensor.temp - avgTemp)
     if(delta > thresholdTemp) Option(delta) else Option.empty
   }
 
-  val spikeCount: Var[Int] = Var[Int](0)
+  private var _spikeCount: Int = 0
+  val spikeCount: Val[Int] = Val[Int]({if(spikeTemp.isDefined) _spikeCount += 1; _spikeCount})
 
   val spikeRate: Val[Double] = Val[Double](spikeCount / firingCount)
 
-  def start(): Unit = {
-    tempSensor.temp.attach(t => {
-      sumTemp.set(sumTemp.get + t)
-      firingCount.set(firingCount.get + 1)
-      minTemp.set(if(t < minTemp.get) t else minTemp.get)
-      maxTemp.set(if(t > maxTemp.get) t else maxTemp.get)
-    })
-
-    spikeTemp.attach(t => spikeCount.set(spikeCount.get + 1))
-    tempSensor.start()
-  }
+  def start(): Unit = tempSensor.start()
 
   def log(): Unit = {
     tempSensor.temp.attach(t => println(s"[${Thread.currentThread().getName}] temp: $t"))
