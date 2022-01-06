@@ -1,7 +1,7 @@
 package it.unibo.pps.snake.view
 
 import io.github.sodium.CellSink
-import it.unibo.pps.snake.controller.{SnakeController, Status}
+import it.unibo.pps.snake.controller.{Engine, SnakeController, Status}
 import it.unibo.pps.snake.controller.Status.Status
 import it.unibo.pps.snake.model.Directions
 import it.unibo.pps.snake.model.Directions.Direction
@@ -25,7 +25,7 @@ case class SnakeView(widthView: Int = 500, heightView: Int = 500) extends JFrame
   def init(): Unit = {
     setSize(widthView, heightView)
     setTitle("FRP Snake")
-    val snakeController: SnakeController = SnakeController(directionInput, statusInput, speedInput, (0,widthView,0,heightView))
+    val snakeController: SnakeController = SnakeController(directionInput, (0,widthView,0,heightView), Engine(statusInput, speedInput))
 
     val snakeVisualizerPanel: SnakeVisualizerPanel = SnakeVisualizerPanel(widthView, heightView, speedInput)
 

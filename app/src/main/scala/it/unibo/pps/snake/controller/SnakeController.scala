@@ -11,9 +11,8 @@ import java.util.concurrent.{ExecutorService, Executors}
 
 case class SnakeController(
   directionInput: Cell[Directions.Direction],
-  statusInput: Cell[Status.Status],
-  speedInput: Cell[Int],
-  boundary: Boundary
+  boundary: Boundary,
+  engine: Engine
 ) {
   private val logger = LoggerFactory.getLogger(SnakeController.getClass)
 
@@ -22,7 +21,6 @@ case class SnakeController(
 
   private val threadPoolSize: Int = Runtime.getRuntime.availableProcessors + 1
   private val executor: ExecutorService = Executors.newFixedThreadPool(threadPoolSize)
-  private val engine: Engine = Engine(statusInput, speedInput)
 
   implicit class BoundedSnake(snake: Snake) {
     def bound(boundary: Boundary): Snake = {
