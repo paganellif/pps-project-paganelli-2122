@@ -89,4 +89,30 @@ implicit class BoundedSnake(snake: Snake) {
 }
 \end{lstlisting}
 
+\section{Testing}
+Il codice FRP può essere testato tramite unit testing definendo asserzioni sul valore contenuto in una \textit{Cell} o emesso da uno \textit{Stream}. Il metodo \textit{sample} fornito dal costrutto \textit{Cell} permette di estrarre il contenuto ottenendo il valore: per semplicità è possibile inserire il valore emesso da uno \textit{Stream} in una \textit{Cell} tramite i metodi \textit{accum} e \textit{hold}.
+
+I componenti principali della applicazione sviluppata, \textit{SnakeController} e \textit{Engine}, sono stati testati secondo la metodologia \textit{Behaviour Driven Development} sfruttando la API \textit{FlatSpec} fornita dalla libreria \textit{ScalaTest}.
+
+\begin{lstlisting}[language=Javascript, caption=Esempio Test SnakeController - Unit testing codice FRP]
+@RunWith(classOf[JUnitRunner])
+class SnakeControllerTest extends AnyFlatSpec with Matchers {
+// Mocked Inputs
+val mockedDirectionInput: CellSink[Direction] = new CellSink[Direction](Directions.RIGHT)
+val mockedBoundary: Boundary = (0,500,0,500)
+val mockedEngine: Engine = Engine(new CellSink[Status](Status.PAUSE), new CellSink[Int](1))
+
+val snakeController: SnakeController = SnakeController(mockedDirectionInput, mockedBoundary, mockedEngine)
+
+"A snake controller when created" should "have right direction" in {
+  assert(snakeController.directionInput.sample() == Directions.RIGHT)
+}
+
+it should "initialize a snake with size 1, positioned in the middle of the playground" in {
+  assert(snakeController.snakeSizeOutput().sample() == 1)
+  assert(snakeController.snakeOutput.sample().head == ((mockedBoundary._2/2).round,(mockedBoundary._4/2).round))
+}
+\end{lstlisting}
+ 
+
 \end{document}
