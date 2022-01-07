@@ -1,11 +1,11 @@
 package it.unibo.pps
 
 import io.github.sodium.CellSink
-import it.unibo.pps.snake.controller.{Engine, SnakeController, Status}
+import it.unibo.pps.snake.controller.{Engine, Event, SnakeController, Status}
 import it.unibo.pps.snake.controller.Status.Status
 import it.unibo.pps.snake.model.Directions.Direction
 import it.unibo.pps.snake.model.World.Boundary
-import it.unibo.pps.snake.model.Directions
+import it.unibo.pps.snake.model.{Directions, Snake}
 import org.junit.runner.RunWith
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
@@ -42,5 +42,52 @@ class SnakeControllerTest extends AnyFlatSpec with Matchers {
 
     assert(snakeController.snakeSizeOutput().sample() == initialSnake.body.length)
     assert(snakeController.snakeOutput.sample().head == initialSnake.head)
+  }
+
+  it should "move the snake in the right direction if started" in {
+    val initialSnake = snakeController.snakeOutput.sample()
+
+    // mocked start
+    val snakeUpdate = snakeController.snakeOutput.updates().hold(Snake(Array((0,0))))
+    mockedEngine.ticker.send(Event())
+
+    // check if the snake is moved or increased
+    assert(snakeUpdate.sample().body.length >= initialSnake.body.length)
+    assert(snakeUpdate.sample().head != initialSnake.head)
+
+    // check if the snake is moved in the right direction: (x,y) => (x+10,y)
+    assert(snakeUpdate.sample().head._1 > initialSnake.head._1)
+  }
+
+  it should "move the snake in the up direction" in {
+    val initialSnake = snakeController.snakeOutput.sample()
+
+    // mocked start
+    val snakeUpdate = snakeController.snakeOutput.updates().hold(Snake(Array((0,0))))
+    mockedDirectionInput.send(Directions.UP)
+    mockedEngine.ticker.send(Event())
+
+    // check if the snake is moved or increased
+    assert(snakeUpdate.sample().body.length >= initialSnake.body.length)
+    assert(snakeUpdate.sample().head != initialSnake.head)
+
+    // check if the snake is moved in the up direction: (x,y) => (x,y-10)
+    assert(snakeUpdate.sample().head._2 < initialSnake.head._2)
+  }
+
+  it should "move the snake in the down direction if started" in {
+    val initialSnake = snakeController.snakeOutput.sample()
+
+    // mocked start
+    val snakeUpdate = snakeController.snakeOutput.updates().hold(Snake(Array((0,0))))
+    mockedDirectionInput.send(Directions.DOWN)
+    mockedEngine.ticker.send(Event())
+
+    // check if the snake is moved or increased
+    assert(snakeUpdate.sample().body.length >= initialSnake.body.length)
+    assert(snakeUpdate.sample().head != initialSnake.head)
+
+    // check if the snake is moved in the down direction: (x,y) => (x,y+10)
+    assert(snakeUpdate.sample().head._2 > initialSnake.head._2)
   }
 }
