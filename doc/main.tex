@@ -10,7 +10,6 @@
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 \usepackage{url}
-\usepackage{natbib}
 \usepackage{graphicx}
 \linespread{1.2}
 \usepackage{float}
@@ -23,9 +22,6 @@
 
 \newcommand{\emailaddr}[1]{\href{mailto:#1}{\texttt{#1}}}
 \usepackage{subfiles} % Best loaded last in the preamble
-\usepackage{natbib}
-\usepackage{graphicx}
-\usepackage{float}
 
 \lstset{basicstyle=\ttfamily,
   showstringspaces=false,
@@ -41,9 +37,9 @@
 \definecolor{purple}{rgb}{0.65, 0.12, 0.82}
 
 \lstdefinelanguage{JavaScript}{
-  keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, in, while, do, else, case, break},
+  keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, if, it, in, while, do, else, case, object, type, break, implicit, class, def, yield, val, for},
   keywordstyle=\color{blue}\bfseries,
-  ndkeywords={class, export, boolean, throw, implements, import, this},
+  ndkeywords={export, boolean, throw, implements, import, this},
   ndkeywordstyle=\color{darkgray}\bfseries,
   identifierstyle=\color{black},
   sensitive=false,
@@ -81,7 +77,7 @@
     \\ matricola 0000926989 \\ A.A 21/22
 }
 
-\date{Dicembre 2021}
+\date{Gennaio 2022}
 
 \usepackage{ifxetex,ifluatex}
 
@@ -111,27 +107,67 @@
 
 \maketitle
 \newpage
+\begin{abstract}
+Lo scopo del progetto individuale consiste nello studio e nella sperimentazione del paradigma Functional Reactive Programming (FRP) in Scala. Il primo capitolo tratta lo studio delle principali caratteristiche del paradigma FRP, derivanti dall'unione dei due paradigmi funzionale (FP) e reattivo (RP), e della architettura di una applicazione FRP. Successivamente vengono analizzate e confrontate alcune librerie open-source per il paradigma FRP in Scala, scelte fra quelle disponibili al momento dello svolgimento del progetto, sviluppando alcuni semplici esempi di test per sperimentare pro e contro delle librerie. Nell'ultimo capitolo si descrive come è stata progettata e sviluppata una semplice rivisitazione del videogioco Snake utilizzando il paradigma FRP, il linguaggio Scala e una fra le librerie individuate nel capitolo precedente.
+
+Tutto il codice, esempi e applicazione, è disponibile al repository pubblico Github \url{https://github.com/paganellif/pps-project-paganelli-2122}.
+% TODO: completare introduzione indicando le librerie individuate/analizzate nella seconda sezione
+% TODO: completare introduzione indicando la libreria scelta, quale mini-applicazione è stata fatta
+\end{abstract}
+\newpage
 \tableofcontents
 
-\newpage
-\chapter{Introduzione}\label{analisi}
-\subfile{chapters/introduzione-1}
+%\newpage
+%\chapter{Introduzione}\label{introduzione}
+%\subfile{chapters/introduzione-1}
 
 \newpage
-\chapter{Functional Reactive Programming}\label{analisi}
-\subfile{chapters/frp-2}
+\chapter{Functional Reactive Programming}\label{frp}
+\subfile{chapters/frp-1}
 
 \newpage
 \chapter{Analisi Librerie Scala}\label{analisi}
-\subfile{chapters/analisi-3}
+\subfile{chapters/analisi-2}
 
 \newpage
-\chapter{Mini-Applicazione FRP}\label{analisi}
-\subfile{chapters/mini-app-4}
+\chapter{Mini-App: FRP Snake}\label{mini-app}
+\subfile{chapters/mini-app-3}
 
 \newpage
-\nocite{*} % Includes all references from the `references.bib` file
-\bibliographystyle{plain}
-\bibliography{references}
+\chapter{Conclusioni}\label{conclusioni}
+\subfile{chapters/conclusioni-4}
+
+\newpage
+%\addcontentsline{toc}{section}{Riferimenti bibliografici}
+\begin{thebibliography}{4}
+
+\bibitem{frp1}
+Rambabu Posa, \\ \textit{Scala Reactive Programming}, \\ Packt, 2018
+
+\bibitem{frp2}
+\textit{Functional Reactive Programming}, \\
+\url{https://en.wikipedia.org/wiki/Functional_reactive_programming}
+
+\bibitem{frp3}
+Jonas Bonér, Dave Farley, Roland Kuhn and Martin Thompson, \\ \textit{The Reactive Manifesto}, \\
+  \url{https://www.reactivemanifesto.org/}
+
+\bibitem{frp4}
+Reactive Streams Special Interest Group, \\ \textit{Reactive Streams}, \\
+  \url{https://www.reactive-streams.org/}
+
+\bibitem{frp5}
+Wan Zhanyong and Hudak Paul, \\ \textit{Functional Reactive Programming from First Principles}, \\
+Association for Computing Machinery, 2000
+
+\bibitem{frp6}
+Conal Elliott, \\ \textit{Push-pull functional Reactive Programming}, \\
+\url{http://conal.net/papers/push-pull-frp}, 2009
+
+\bibitem{frp7}
+Stephen Blackheath, Anthony Jones, \\ \textit{Functional Reactive Programming}, \\
+Manning, 2016
+
+\end{thebibliography}
 
 \end{document}

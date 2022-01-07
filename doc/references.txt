@@ -1,0 +1,45 @@
+@article{frp1,
+  title={Scala Reactive Programming},
+  author ={Rambabu Posa},
+  note={Packt},
+  year={2018}
+}
+
+@article{frp2,
+  author = {Wikipedia},
+  title = {Functional Reactive Programming},
+  url = {https://en.wikipedia.org/wiki/Functional_reactive_programming}
+}
+
+@article{frp3,
+  author = {Jonas Bonér, Dave Farley, Roland Kuhn and Martin Thompson},
+  title = {The Reactive Manifesto},
+  url = {https://www.reactivemanifesto.org/}
+}
+
+@article{frp4,
+  author = {Reactive Streams Special Interest Group},
+  title = {Reactive Streams},
+  url = {https://www.reactive-streams.org/}
+}
+
+@article{frp5,
+  author = {Wan Zhanyong and Hudak Paul},
+  title = {Functional Reactive Programming from First Principles},
+  year = {2000},
+  note = {Association for Computing Machinery}
+}
+
+@article{frp6,
+  author = {Conal Elliott},
+  title = {Push-pull functional Reactive Programming},
+  url = {http://conal.net/papers/push-pull-frp},
+  year = {2009}
+}
+
+@article{frp7,
+  title={Functional Reactive Programming},
+  author ={Stephen Blackheath, Anthony Jones},
+  note={Manning},
+  year={2016}
+}

@@ -37,9 +37,9 @@ dependencies {
     implementation 'co.fs2:fs2-reactive-streams_2.13:3.2-148-d9af944'
 
     // https://mvnrepository.com/artifact/com.typesafe.akka/akka-stream
-    implementation 'com.typesafe.akka:akka-stream_2.13:2.6.17'
-    implementation platform('com.typesafe.akka:akka-bom_2.13:2.6.17')
-    testImplementation 'com.typesafe.akka:akka-stream-testkit_2.13:2.6.17'
+    implementation 'com.typesafe.akka:akka-stream_2.13:2.6.18'
+    implementation platform('com.typesafe.akka:akka-bom_2.13:2.6.18')
+    testImplementation 'com.typesafe.akka:akka-stream-testkit_2.13:2.6.18'
 
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:31.0.1-jre'
@@ -48,9 +48,15 @@ dependencies {
     // https://mvnrepository.com/artifact/com.tngtech.archunit/archunit
     implementation 'com.tngtech.archunit:archunit:0.22.0'
 
+    // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+    implementation 'org.slf4j:slf4j-api:2.0.0-alpha5'
+
+    // https://mvnrepository.com/artifact/org.slf4j/slf4j-simple
+    implementation 'org.slf4j:slf4j-simple:2.0.0-alpha5'
+
     // Use Scalatest for testing our library
     testImplementation 'junit:junit:4.13.2'
-    testImplementation 'org.scalatest:scalatest_2.13:3.2.10'
+    testImplementation 'org.scalatest:scalatest_2.13:3.3.0-SNAP3'
     testImplementation 'org.scalatestplus:junit-4-13_2.13:3.3.0.0-SNAP3'
 
     // https://mvnrepository.com/artifact/org.scalacheck/scalacheck
@@ -61,8 +67,8 @@ dependencies {
 
     // Need scala-xml at test runtime
     testRuntimeOnly 'org.scala-lang.modules:scala-xml_2.13:2.0.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.1'
-    testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.7.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+    testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.8.2'
 }
 
 test {
@@ -82,7 +88,7 @@ jacocoTestReport {
 jar {
     manifest {
         attributes(
-                'Main-Class': 'it.unibo.pps.App'
+                'Main-Class': 'it.unibo.pps.SnakeExample'
         )
     }
     duplicatesStrategy(DuplicatesStrategy.WARN)
@@ -91,5 +97,5 @@ jar {
 
 application {
     // Define the main class for the application.
-    mainClass = 'it.unibo.pps.App'
+    mainClass = 'it.unibo.pps.SnakeExample'
 }
