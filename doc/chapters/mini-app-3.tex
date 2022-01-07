@@ -112,6 +112,21 @@ it should "initialize a snake with size 1, positioned in the middle of the playg
   assert(snakeController.snakeSizeOutput().sample() == 1)
   assert(snakeController.snakeOutput.sample().head == ((mockedBoundary._2/2).round,(mockedBoundary._4/2).round))
 }
+
+it should "move the snake in the right direction if started" in {
+  val initialSnake = snakeController.snakeOutput.sample()
+
+  // mocked start
+  val snakeUpdate = snakeController.snakeOutput.updates().hold(Snake(Array((0,0))))
+  mockedEngine.ticker.send(Event())
+
+  // check if the snake is moved or increased
+  assert(snakeUpdate.sample().body.length >= initialSnake.body.length)
+  assert(snakeUpdate.sample().head != initialSnake.head)
+
+  // check if the snake is moved in the right direction: (x,y) => (x+10,y)
+  assert(snakeUpdate.sample().head._1 > initialSnake.head._1)
+}
 \end{lstlisting}
  
 
