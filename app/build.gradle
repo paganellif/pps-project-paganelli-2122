@@ -52,7 +52,7 @@ dependencies {
     implementation 'org.slf4j:slf4j-api:2.0.0-alpha5'
 
     // https://mvnrepository.com/artifact/org.slf4j/slf4j-simple
-    implementation 'org.slf4j:slf4j-simple:2.0.0-alpha5'
+    implementation 'org.slf4j:slf4j-simple:2.0.0-alpha6'
 
     // Use Scalatest for testing our library
     testImplementation 'junit:junit:4.13.2'
