@@ -39,8 +39,8 @@ Data la definizione degli input e degli output della applicazione, la seguente f
 \end{figure}
 
 \section{Implementazione}
-Il mondo di gioco 2D è modellato come un insieme di punti cardinali (\textit{Position}) e un confine dato dai limiti inferiori e superiori nei due assi x,y (\textit{Boundary}). Sfruttando le \textit{type-classes} fornite da Scala, i due concetti assumono rispettivamente il significato di \textit{Tupla2} (x,y) e \textit{Tupla4} (xMin, xMax, yMin, yMax).
-\begin{lstlisting}[language=Javascript, caption=Definizione dei concetti rappresentanti il mondo 2D di gioco tramite \textit{type-classes}.]
+Il mondo di gioco 2D è modellato come un insieme di punti cardinali (\textit{Position}) e un confine dato dai limiti inferiori e superiori nei due assi x,y (\textit{Boundary}). Sfruttando il meccanismo \textit{alias} fornito da Scala, i due concetti assumono rispettivamente il significato di \textit{Tupla2} (x,y) e \textit{Tupla4} (xMin, xMax, yMin, yMax).
+\begin{lstlisting}[language=Javascript, caption=Definizione dei concetti rappresentanti il mondo 2D di gioco tramite \textit{alias}.]
 object World {
   type Position = (Int,Int)
   type Boundary = (Int,Int,Int,Int)
@@ -49,7 +49,7 @@ object World {
 
 L'engine FRP della applicazione, ossia la logica che valuta le dipendenze mappando gli input con gli output, è dato da due componenti principali:
 \begin{description}
-  \item[Engine] - Si occupa dell'avanzamento/terminazione del gioco e della velocità di gioco. Lo stream di output di questo componente si attiva con una certo periodo (in millisecondi: \textit{1000 / speedInput.sample}) pilotando la computazione della nuova posizione del serpente. dedicato.
+  \item[Engine] - Si occupa dell'avanzamento/terminazione del gioco e della velocità di gioco. Lo stream di output di questo componente si attiva con una certo periodo (in millisecondi: \textit{1000 / speedInput.sample}) pilotando la computazione della nuova posizione del serpente.
   \begin{figure}[H]
 \centering
 \includegraphics[width=0.9\textwidth]{img/frp-scala-Page-6.drawio.png}
