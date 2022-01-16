@@ -54,6 +54,8 @@ Le seguenti dieci primitive sono le operazioni basiche che tipicamente sono pres
     \item[Switch] - Primitiva, chiamata anche \textit{flatten} o \textit{join}, che permette di modificare dinamicamente il grafo delle dipendenze.
 \end{description}
 
+Tra i diversi benefici dati dall'unione dei due paradigmi funzionale e reattivo i principali sono: ($i$) \textit{Transactional System}, ovvero è garantito che nessuna attivazione di stream è persa/nulla e ($ii$) \textit{Unpredictable Order}, cioè l'ordine con cui sono valutate le transazioni non è determinabile a priori.
+
 \subsection{Lifecycle Programma FRP}
 Un programma FRP è quindi un insieme di behavior e event, costruito partendo da valori statici (che non variano nel tempo) e/o altri behavior/event. Questi sostituiscono il \textit{pattern Observer} fornendo un sistema per programmare logica event-driven in modo componibile/modulare, ovvero definire reazioni al verificarsi di un evento (un input o stream di dati). L' esecuzione di un programma FRP può essere suddivisa in 3 step:
 \begin{description}
