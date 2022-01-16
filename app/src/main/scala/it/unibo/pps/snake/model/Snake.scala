@@ -69,7 +69,7 @@ object Snake {
 
     override val head: Position = body.head
 
-    override def isKnotted: Boolean = if (body.length == 1) false else body.foldRight(false)((elem1, acc) => {
+    override def isKnotted: Boolean = body.foldRight(false)((elem1, acc) => {
       if(!acc) body.count(elem2 => elem1 == elem2) > 1 else acc
     })
 
