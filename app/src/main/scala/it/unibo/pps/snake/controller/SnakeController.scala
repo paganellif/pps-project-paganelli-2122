@@ -3,7 +3,7 @@ package it.unibo.pps.snake.controller
 import io.github.sodium.Cell
 import it.unibo.pps.snake.model.Directions.Direction
 import it.unibo.pps.snake.model.Food.Score
-import it.unibo.pps.snake.model.World.Boundary
+import it.unibo.pps.snake.model.World.{Boundary, Position}
 import it.unibo.pps.snake.model.{Directions, Food, Snake}
 import org.slf4j.LoggerFactory
 
@@ -51,16 +51,16 @@ case class SnakeController(
   def output: Cell[(Snake,Array[Food])] = engine.ticker
     .accum((initSnake, initFood), (event: Event, acc: (Snake, Array[Food])) => {
       val tmpD: Direction = directionInput.sample()
-      val tmpS: Snake = acc._1.move(tmpD).getOrElse(acc._1).bound(boundary)
+      val tmpS: Snake = acc._1.move(tmpD).bound(boundary)
 
       if(acc._2.map(f => f.position).exists(p => tmpS.isNearTo(p))){
-        logger.debug("increased snake: new head {}",tmpS.head)
-        val s: Snake = acc._1.increase(tmpD).getOrElse(acc._1)
+        val s: Snake = acc._1.increase(tmpD)
+        logger.debug("increased snake: new head {}",s.head)
 
-        val tmpF: Array[Food] = acc._2.filter(elem => !s.isNearTo(elem.position))
-        val f: Array[Food] = tmpF.prependedAll(Food.createRandomFoods(
-            tmpF.map(f => f.position).prependedAll(s.body), boundary, 1))
-        (s,f)
+        val alreadyPresentFoods: Array[Food] = acc._2.filter(elem => !s.isNearTo(elem.position))
+        val positionsToBeExcluded: Array[Position] = alreadyPresentFoods.map(f => f.position).prependedAll(s.body)
+
+        (s,Food.createRandomFoods(positionsToBeExcluded, boundary,1).appendedAll(alreadyPresentFoods))
       } else {
         logger.debug("moved snake in direction {}", tmpD)
         (tmpS, acc._2)
@@ -73,25 +73,25 @@ case class SnakeController(
    * @return <code>Cell[Array[Food]]</code>
    */
   def foodOutput: Cell[Array[Food]] = output.map(sf => sf._2)
-
+  
   /**
    * The score of the game: modified when the snake eats a food.
    *
    * @return <code>Cell[Score]</code>
    */
   def scoreOutput: Cell[Score] = foodOutput.updates().accum((initFood, 0), (fp: Array[Food], acc: (Array[Food],Score)) => {
-    val foodDiff = fp.diff(acc._1)
-    logger.debug(s"previous: ${fp.mkString("Array(", ", ", ")")} - " +
-      s"acc: ${acc._1.mkString("Array(", ", ", ")")} - " +
-      s"food diff: ${foodDiff.mkString("Array(", ", ", ")")}")
+    val foodDiff = acc._1.diff(fp)
+    logger.debug(s"next: ${fp.mkString("Array(", ", ", ")")}")
+    logger.debug(s"prev: ${acc._1.mkString("Array(", ", ", ")")}")
+    logger.debug(s"food diff: ${foodDiff.mkString("Array(", ", ", ")")}")
     if(foodDiff.length > 0){
       val out = (fp,acc._2 + foodDiff.head.score)
       logger.debug(s"${foodDiff.head}")
-      logger.debug(s"score output: ${out}")
+      logger.debug(s"score output: ${out._2}")
       // TODO: fix algo
       out
     } else {
-      (fp,acc._2)
+      (acc._1,acc._2)
     }
   }).map((fs: (_, Score)) => fs._2)
 
@@ -105,9 +105,12 @@ case class SnakeController(
   /**
    * The snake of the game: modified when the snake is knotted.
    *
-   * @return <code>Cell[Snake]</code>
+   * @return <code>Cell[Boolean]</code>
    */
-  def isKnottedOutput: Cell[Option[Snake]] = output.map(o => if(o._1.isKnotted) Option(o._1) else Option.empty)
+  def isKnottedOutput: Cell[Boolean] = output.map(o => {
+    logger.debug(s"snake ${o._1} knotted status: ${o._1.isKnotted}")
+    o._1.isKnotted
+  })
 
   /**
    * The size of the snake: modified when the snake is moved or increased.

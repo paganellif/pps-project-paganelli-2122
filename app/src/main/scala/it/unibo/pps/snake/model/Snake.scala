@@ -25,25 +25,25 @@ trait Snake {
   /**
    * Return a new Snake with the body reversed.
    *
-   * @return <code>Option[Snake]</code>
+   * @return <code>Snake</code>
    */
-  def reversed: Option[Snake]
+  def reversed: Snake
 
   /**
    * Return a new Snake moved in a specific direction.
    *
    * @param direction the direction in which the snake is to be moved.
-   * @return <code>Option[Snake]</code>
+   * @return <code>Snake</code>
    */
-  def move(direction: Directions.Direction): Option[Snake]
+  def move(direction: Directions.Direction): Snake
 
   /**
    * Return a new Snake increased in a specific direction.
    *
    * @param direction the direction in which the snake is to be increased.
-   * @return <code>Option[Snake]</code>
+   * @return <code>Snake</code>
    */
-  def increase(direction: Directions.Direction): Option[Snake]
+  def increase(direction: Directions.Direction): Snake
 
   /**
    * Return true if the position is near to the head of the snake, false otherwise
@@ -65,10 +65,6 @@ object Snake {
    */
   private case class SnakeImpl(override val body: Array[Position]) extends Snake {
 
-    implicit class OptionalSnake(snake: Snake) {
-      def toOptional: Option[Snake] = if(!snake.isKnotted) Option(snake) else Option.empty
-    }
-
     private val deltaMove: Int = 10
 
     override val head: Position = body.head
@@ -77,20 +73,20 @@ object Snake {
       if(!acc) body.count(elem2 => elem1 == elem2) > 1 else acc
     })
 
-    override def reversed: Option[Snake] = Snake(body.reverse).toOptional
+    override def reversed: Snake = Snake(body.reverse)
 
-    override def move(direction: Direction): Option[Snake] = direction match {
-      case Directions.RIGHT => if(!this.isKnotted) Snake(Array.from(body.init).prepended((head._1 + deltaMove, head._2))).toOptional else Option.empty
-      case Directions.LEFT  => if(!this.isKnotted) Snake(Array.from(body.init).prepended((head._1 - deltaMove, head._2))).toOptional else Option.empty
-      case Directions.UP    => if(!this.isKnotted) Snake(Array.from(body.init).prepended((head._1, head._2 - deltaMove))).toOptional else Option.empty
-      case Directions.DOWN  => if(!this.isKnotted) Snake(Array.from(body.init).prepended((head._1, head._2 + deltaMove))).toOptional else Option.empty
+    override def move(direction: Direction): Snake = direction match {
+      case Directions.RIGHT => Snake(Array.from(body.init).prepended((head._1 + deltaMove, head._2)))
+      case Directions.LEFT  => Snake(Array.from(body.init).prepended((head._1 - deltaMove, head._2)))
+      case Directions.UP    => Snake(Array.from(body.init).prepended((head._1, head._2 - deltaMove)))
+      case Directions.DOWN  => Snake(Array.from(body.init).prepended((head._1, head._2 + deltaMove)))
     }
 
-    override def increase(direction: Direction): Option[Snake] = direction match {
-      case Directions.RIGHT => if(!this.isKnotted) Snake(Array.from(body).prepended((head._1 + deltaMove, head._2))).toOptional else Option.empty
-      case Directions.LEFT  => if(!this.isKnotted) Snake(Array.from(body).prepended((head._1 - deltaMove, head._2))).toOptional else Option.empty
-      case Directions.UP    => if(!this.isKnotted) Snake(Array.from(body).prepended((head._1, head._2 - deltaMove))).toOptional else Option.empty
-      case Directions.DOWN  => if(!this.isKnotted) Snake(Array.from(body).prepended((head._1, head._2 + deltaMove))).toOptional else Option.empty
+    override def increase(direction: Direction): Snake = direction match {
+      case Directions.RIGHT => Snake(Array.from(body).prepended((head._1 + deltaMove, head._2)))
+      case Directions.LEFT  => Snake(Array.from(body).prepended((head._1 - deltaMove, head._2)))
+      case Directions.UP    => Snake(Array.from(body).prepended((head._1, head._2 - deltaMove)))
+      case Directions.DOWN  => Snake(Array.from(body).prepended((head._1, head._2 + deltaMove)))
     }
 
     override def isNearTo(position: Position): Boolean =

@@ -69,6 +69,7 @@ case class SnakeView(widthView: Int = 500, heightView: Int = 500) extends JFrame
     snakeController.start()
     snakeController.output.listen(sf => {snakeVisualizerPanel.repaintSnake(sf._1); snakeVisualizerPanel.repaintFood(sf._2)})
     snakeController.scoreOutput.listen(s => snakeVisualizerPanel.repaintScore(s))
+    snakeController.isKnottedOutput.listen(s => if(s) System.exit(0))
 
     val cp: JPanel = new JPanel()
     val lm: LayoutManager = new BorderLayout()
