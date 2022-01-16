@@ -59,7 +59,7 @@ object Food {
       position = (Random.between((boundary._1).round, (boundary._2/10).round)*10,
         Random.between((boundary._3).round, (boundary._4/10).round)*10)
       if !positionToBeExcluded.contains(position)
-    } yield if((position._1 + position._2) % 2 == 0) Food.createHealthyFood(position) else Food.createJunkFood(position)).toArray
+    } yield if((position._1/2) % 2 == 0) Food.createHealthyFood(position) else Food.createJunkFood(position)).toArray
   }
 
   /**
