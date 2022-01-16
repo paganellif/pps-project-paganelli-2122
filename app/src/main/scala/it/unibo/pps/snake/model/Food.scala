@@ -57,8 +57,7 @@ object Food {
     (for {
       i <- 0 until nFood
       position = (Random.between((boundary._1/10).round*10, (boundary._2/10).round*10),
-        Random.between((boundary._3/10).round*10, (boundary._4/10)*10))
-      // TODO: fix generate random while if condition is true
+        Random.between((boundary._3/10).round*10, (boundary._4/10).round*10))
       if !positionToBeExcluded.contains(position)
     } yield if((position._1 + position._2) % 2 == 0) Food.createHealthyFood(position) else Food.createJunkFood(position)).toArray
   }

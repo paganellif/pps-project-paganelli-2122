@@ -51,11 +51,11 @@ case class SnakeController(
   def output: Cell[(Snake,Array[Food])] = engine.ticker
     .accum((initSnake, initFood), (event: Event, acc: (Snake, Array[Food])) => {
       val tmpD: Direction = directionInput.sample()
-      val tmpS: Snake = acc._1.move(tmpD).getOrElse(acc._1).bound(boundary)
+      val tmpS: Snake = acc._1.move(tmpD).bound(boundary)
 
       if(acc._2.map(f => f.position).exists(p => tmpS.isNearTo(p))){
         logger.debug("increased snake: new head {}",tmpS.head)
-        val s: Snake = acc._1.increase(tmpD).getOrElse(acc._1)
+        val s: Snake = acc._1.increase(tmpD)
 
         val tmpF: Array[Food] = acc._2.filter(elem => !s.isNearTo(elem.position))
         val f: Array[Food] = tmpF.prependedAll(Food.createRandomFoods(
@@ -105,9 +105,12 @@ case class SnakeController(
   /**
    * The snake of the game: modified when the snake is knotted.
    *
-   * @return <code>Cell[Snake]</code>
+   * @return <code>Cell[Boolean]</code>
    */
-  def isKnottedOutput: Cell[Option[Snake]] = output.map(o => if(o._1.isKnotted) Option(o._1) else Option.empty)
+  def isKnottedOutput: Cell[Boolean] = output.map(o => {
+    logger.debug(s"snake ${o._1} knotted status: ${o._1.isKnotted}")
+    o._1.isKnotted
+  })
 
   /**
    * The size of the snake: modified when the snake is moved or increased.
